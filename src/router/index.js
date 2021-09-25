@@ -4,7 +4,7 @@ import Tabs from '../views/Tabs.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/tabs/tab1'
+    redirect: '/tabs/feed'
   },
   {
     path: '/tabs/',
@@ -12,19 +12,19 @@ const routes = [
     children: [
       {
         path: '',
-        redirect: '/tabs/tab1'
+        redirect: '/tabs/feed'
       },
       {
-        path: 'tab1',
-        component: () => import('@/views/Tab1.vue')
+        path: 'feed',
+        component: () => import('@/views/Feed.vue')
       },
       {
-        path: 'tab2',
-        component: () => import('@/views/Tab2.vue')
+        path: 'add',
+        component: () => import('@/views/Add.vue')
       },
       {
-        path: 'tab3',
-        component: () => import('@/views/Tab3.vue')
+        path: 'profile',
+        component: () => import('@/views/Profile.vue')
       }
     ]
   }
