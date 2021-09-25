@@ -1,0 +1,7 @@
+{
+  "name": "shark_news_vue",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
