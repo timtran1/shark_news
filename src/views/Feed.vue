@@ -94,32 +94,7 @@ export default {
       chatboxEllipsesOutline,
       fishOutline,
       personCircleOutline,
-      posts: [
-        // {
-        //   title: 'Panel debates Dems’ $3.5T bill, crunch time for Biden agenda',
-        //   subtext: 'Democrats pushed a $3.5 trillion, 10-year bill strengthening social safety net and climate programs toward House Budget Committee approval Saturday, while party leaders hunted behind the scenes for compromises to resolve internal divisions and, they hoped, allow the sprawling package’s eventual passage by Congress.',
-        //   image: 'https://storage.googleapis.com/afs-prod/media/d6f377b4c81f4564bc81e0e5c39dd8d7/1000.jpeg',
-        //   url: 'https://apnews.com/article/business-bills-caced68243ed52f5d6cb767c77a3b269'
-        // },
-        // {
-        //   title: 'CDC endorses COVID booster for millions of older Americans',
-        //   subtext: 'The Centers for Disease Control and Prevention on Thursday endorsed booster shots for millions of older or otherwise vulnerable Americans, opening a major new phase in the U.S vaccination drive against COVID-19.',
-        //   image: 'https://storage.googleapis.com/afs-prod/media/38d614f95c1047e48bc09f8f3c29b9a9/2930.jpeg',
-        //   url: 'https://apnews.com/article/coronavirus-pandemic-business-science-health-coronavirus-vaccine-95b8d9a432b60fe0e9713adf75dde0ee'
-        // },
-        // {
-        //   title: 'Woman arrested on suspicion of starting California blaze',
-        //   subtext: 'A woman has been arrested on suspicion of starting a Northern California wildfire that spread rapidly, burning homes and prompting evacuation orders Thursday in a rural community, authorities said.',
-        //   image: 'https://storage.googleapis.com/afs-prod/media/40a85d418f324f5db7c846eba5c30539/1000.jpeg',
-        //   url: 'https://apnews.com/article/fires-california-wildfires-evacuations-redding-66a00bdfc6747392f7dfd1d4a6587281'
-        // },
-        // {
-        //   title: 'NY hospitals fear staff shortage as vaccine deadline looms',
-        //   subtext: 'Hospitals and nursing homes in New York are bracing for the possibility that a statewide COVID-19 vaccine mandate for health care workers could lead to staff shortages when it takes effect Monday.',
-        //   image: 'https://storage.googleapis.com/afs-prod/media/da047e910d6b47ad970345706aa192e3/1000.jpeg',
-        //   url: 'https://apnews.com/article/coronavirus-pandemic-lifestyle-business-kathy-hochul-new-york-ceb924e4704c085b05e3439a72c928f2'
-        // },
-      ]
+      posts: []
     }
   },
   created() {

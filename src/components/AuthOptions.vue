@@ -15,7 +15,7 @@
 
         <ion-row>
           <ion-col size="12">
-            <ion-button color="primary" expand="block">
+            <ion-button color="primary" expand="block" router-link="/signup">
               <ion-icon :icon="personAddOutline" slot="start"/>
               Create an account
             </ion-button>
@@ -24,13 +24,13 @@
 
         <ion-row class="ion-text-center">
           <ion-col size="12">
-             <small class="ion-text-center">Or</small>
+            <small class="ion-text-center">Or</small>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col size="12">
-            <ion-button color="light" expand="block">
+            <ion-button color="light" expand="block" router-link="/login">
               <ion-icon :icon="logInOutline" slot="start"/>
               Login
             </ion-button>

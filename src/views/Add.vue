@@ -1,14 +1,18 @@
 <template>
   <ion-page>
+    <ion-header collapse="condense" class="ion-margin-bottom">
+      <ion-toolbar>
+        <ion-title>New post</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
     <ion-content :fullscreen="true" class="ion-padding">
-      <ion-header collapse="condense" class="ion-margin-bottom">
-        <ion-toolbar>
-          <ion-title>New post</ion-title>
-        </ion-toolbar>
-      </ion-header>
 
+      <auth-options v-if="!loading && !uid"/>
 
-      <form class="ion-padding">
+      <p v-if="loading">Loading...</p>
+
+      <form class="ion-padding" v-if="uid">
 
         <ion-label position="stacked">Title</ion-label>
         <ion-input clear-input placeholder="Give your post a title" required></ion-input>
@@ -40,6 +44,8 @@ import {
   IonInput,
   IonButton
 } from '@ionic/vue';
+import {Storage} from "@capacitor/storage";
+import AuthOptions from "../components/AuthOptions";
 
 export default {
   name: 'Add',
@@ -51,7 +57,21 @@ export default {
     IonPage,
     IonLabel,
     IonInput,
-    IonButton
+    IonButton,
+    AuthOptions
+  },
+  created() {
+    Storage.get({key: 'uid'})
+        .then(uid => {
+          this.loading = false
+          this.uid = uid.value
+        })
+  },
+  data() {
+    return {
+      uid: null,
+      loading: true
+    }
   }
 }
 </script>
