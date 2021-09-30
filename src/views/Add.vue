@@ -1,28 +1,57 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Tab 2</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
+    <ion-content :fullscreen="true" class="ion-padding">
+      <ion-header collapse="condense" class="ion-margin-bottom">
         <ion-toolbar>
-          <ion-title size="large">Tab 2</ion-title>
+          <ion-title>New post</ion-title>
         </ion-toolbar>
       </ion-header>
-      
-      <ExploreContainer name="Tab 2 page" />
+
+
+      <form class="ion-padding">
+
+        <ion-label position="stacked">Title</ion-label>
+        <ion-input clear-input placeholder="Give your post a title" required></ion-input>
+
+        <ion-label position="stacked" type="url">URL (optional)</ion-label>
+        <ion-input clear-input placeholder="Link your article here"></ion-input>
+
+        <ion-label position="stacked">Subtext (optional)</ion-label>
+        <ion-input clear-input></ion-input>
+
+        <ion-button type="submit" color="primary" expand="block" class="ion-margin">
+          Submit
+        </ion-button>
+      </form>
+
+
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonLabel,
+  IonInput,
+  IonButton
+} from '@ionic/vue';
 
-export default  {
+export default {
   name: 'Add',
-  components: { ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
+  components: {
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonPage,
+    IonLabel,
+    IonInput,
+    IonButton
+  }
 }
 </script>

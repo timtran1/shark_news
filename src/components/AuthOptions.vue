@@ -4,20 +4,35 @@
 
       <div class="ion-padding  ion-justify-content-center">
 
+        <!--        <ion-row>-->
+        <!--          <ion-col size="12">-->
+        <!--            <ion-button color="danger" expand="block">-->
+        <!--              <ion-icon :icon="logoGoogle" slot="start"/>-->
+        <!--              Continue with Google-->
+        <!--            </ion-button>-->
+        <!--          </ion-col>-->
+        <!--        </ion-row>-->
+
         <ion-row>
           <ion-col size="12">
-            <ion-button color="danger" expand="block">
-              <ion-icon :icon="logoGoogle" slot="start"/>
-              Continue with Google
+            <ion-button color="primary" expand="block">
+              <ion-icon :icon="personAddOutline" slot="start"/>
+              Create an account
             </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-text-center">
+          <ion-col size="12">
+             <small class="ion-text-center">Or</small>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col size="12">
-            <ion-button color="primary" expand="block">
-              <ion-icon :icon="mailOutline" slot="start"/>
-              Continue with email
+            <ion-button color="light" expand="block">
+              <ion-icon :icon="logInOutline" slot="start"/>
+              Login
             </ion-button>
           </ion-col>
         </ion-row>
@@ -37,7 +52,12 @@ import {
   IonIcon,
   IonCol
 } from '@ionic/vue';
-import {mailOutline, logoGoogle} from 'ionicons/icons';
+import {
+  // mailOutline,
+  // logoGoogle,
+  logInOutline,
+  personAddOutline
+} from 'ionicons/icons';
 
 export default {
   name: "AuthOptions",
@@ -51,8 +71,10 @@ export default {
   },
   data() {
     return {
-      mailOutline,
-      logoGoogle
+      // mailOutline,
+      // logoGoogle,
+      logInOutline,
+      personAddOutline
     }
   }
 }
