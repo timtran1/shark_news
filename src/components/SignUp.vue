@@ -11,15 +11,18 @@
     </ion-header>
 
     <ion-content class="ion-padding ion-justify-content-center ion-align-items-center">
-      <form class="ion-padding">
+      <form class="ion-padding" @submit.prevent="submit">
 
-        <ion-input clear-input placeholder="Choose a username" required></ion-input>
+        <ion-input clear-input placeholder="Choose a username" required v-model="name"></ion-input>
 
-        <ion-input clear-input placeholder="Email" type="email" required></ion-input>
+        <ion-input clear-input placeholder="Email" type="email" autocomplete="email" inputmode="email"
+                   required v-model="email"></ion-input>
 
-        <ion-input clear-input placeholder="Password" type="password" required></ion-input>
+        <ion-input clear-input placeholder="Password" type="password" minlength="6" required
+                   v-model="password"></ion-input>
 
-        <ion-input clear-input placeholder="Confirm password" type="password" required></ion-input>
+        <ion-input clear-input placeholder="Confirm password" type="password" minlength="6" required
+                   v-model="confirm_password"></ion-input>
 
         <ion-button type="submit" color="primary" expand="block" class="ion-margin">
           Signup
@@ -40,8 +43,12 @@ import {
   IonToolbar,
   IonBackButton,
   IonButtons,
-  IonTitle
+  IonTitle,
+  alertController
 } from '@ionic/vue';
+import {Storage} from "@capacitor/storage";
+
+const axios = require("axios").default
 
 export default {
   name: "SignUp",
@@ -56,6 +63,52 @@ export default {
     IonButtons,
     IonTitle
   },
+  data() {
+    return {
+      name: '',
+      email: '',
+      password: '',
+      confirm_password: '',
+    }
+  },
+  methods: {
+    async submit() {
+      if (this.password !== this.confirm_password) {
+        let alert = await alertController.create({
+          header: 'Passwords do not match',
+          message: 'Please re-confirm your password',
+          buttons: ['OK']
+        })
+        await alert.present()
+      }
+
+      const token = await Storage.get({key: 'token'})
+      const headers = {Authorization: `Bearer ${token.value}`}
+      let host = ''
+
+      if (process.env.NODE_ENV === 'development') {
+        host = 'http://localhost'
+      } else {
+        host = ''
+      }
+
+      const res = await axios.get(`${host}/signup`, {
+        params: {
+          name: this.name,
+          email: this.email,
+          password: this.password
+        },
+        headers
+      })
+
+      await Storage.set({
+        key: 'uid',
+        value: res.data.uid
+      })
+
+        this.$router.back()
+    }
+  }
 }
 </script>
 

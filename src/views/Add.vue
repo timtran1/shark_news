@@ -63,6 +63,7 @@ export default {
   created() {
     Storage.get({key: 'uid'})
         .then(uid => {
+          console.log({uid})
           this.loading = false
           this.uid = uid.value
         })

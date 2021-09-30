@@ -11,11 +11,13 @@
     </ion-header>
 
     <ion-content class="ion-padding ion-justify-content-center">
-      <form class="ion-padding">
+      <form class="ion-padding" @submit.prevent="submit">
 
-        <ion-input clear-input placeholder="Email" type="email" required></ion-input>
+        <ion-input clear-input placeholder="Email" type="email" autocomplete="email" inputmode="email"
+                   required v-model="email"></ion-input>
 
-        <ion-input clear-input placeholder="Password" type="password" required></ion-input>
+        <ion-input clear-input placeholder="Password" type="password" autocomplete="password"
+                   required v-model="password"></ion-input>
 
         <ion-button type="submit" color="primary" expand="block" class="ion-margin">
           Login
@@ -36,8 +38,10 @@ import {
   IonToolbar,
   IonBackButton,
   IonButtons,
-  IonTitle
+  IonTitle,
 } from '@ionic/vue';
+import {Storage} from "@capacitor/storage";
+import {default as axios} from "axios";
 
 export default {
   name: "Login",
@@ -52,6 +56,53 @@ export default {
     IonButtons,
     IonTitle
   },
+  data() {
+    return {
+      email: '',
+      password: '',
+    }
+  },
+  methods: {
+    async init_new_user() {
+      let res = await axios.get('http://localhost/new_user')
+      await Storage.set({
+        key: 'token',
+        value: res.data.token,
+      })
+      return true
+    },
+    async submit() {
+      let token = await Storage.get({key: 'token'})
+      const headers = {Authorization: `Bearer ${token.value}`}
+      let host = ''
+
+      if (process.env.NODE_ENV === 'development') {
+        host = 'http://localhost'
+      } else {
+        host = ''
+      }
+
+      if (!token.value) {
+        await this.init_new_user()
+        token = await Storage.get({key: 'token'})
+      }
+
+      const res = await axios.get(`${host}/login`, {
+        params: {
+          email: this.email,
+          password: this.password
+        },
+        headers
+      })
+
+      await Storage.set({
+        key: 'uid',
+        value: res.data.uid
+      })
+
+      this.$router.back()
+    }
+  }
 }
 </script>
 

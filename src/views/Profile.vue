@@ -6,14 +6,20 @@
 
       <p v-if="loading">Loading...</p>
 
-       <p v-if="uid">Logged In!</p>
+      <p v-if="uid">Logged In!</p>
+
+      <ion-button v-if="uid" color="danger" fill="outline" @click="logout">Log out</ion-button>
 
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import {IonPage, IonContent} from '@ionic/vue';
+import {
+  IonPage,
+  IonContent,
+  IonButton
+} from '@ionic/vue';
 import AuthOptions from "../components/AuthOptions";
 import {Storage} from '@capacitor/storage';
 
@@ -22,7 +28,8 @@ export default {
   components: {
     AuthOptions,
     IonContent,
-    IonPage
+    IonPage,
+    IonButton
   },
   created() {
     Storage.get({key: 'uid'})
@@ -35,6 +42,12 @@ export default {
     return {
       uid: null,
       loading: true
+    }
+  },
+  methods: {
+    logout() {
+      Storage.clear()
+      this.$router.replace('/tabs/feed')
     }
   }
 }
