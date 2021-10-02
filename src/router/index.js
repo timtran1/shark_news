@@ -35,6 +35,10 @@ const routes = [
     {
         path: '/login',
         component: () => import('@/components/Login.vue')
+    },
+    {
+        path: '/post/view/:id',
+        component: () => import('@/components/PostWebView.vue')
     }
 ]
 

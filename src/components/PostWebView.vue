@@ -1,39 +1,41 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
-      <iframe :src="$props.post.url" frameborder="0"></iframe>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/tabs/feed"></ion-back-button>
+        </ion-buttons>
+        <ion-title v-if="post">{{ post.title }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-row class="user-name-row">
-        <ion-col size="4" class="ion-justify-content-center" color="light">
-          <span>  <ion-icon :icon="personCircleOutline" color="light"/>
-            user56545345</span>
-        </ion-col>
-        <ion-col size="4">
-        </ion-col>
-        <ion-col size="4">
-        </ion-col>
-      </ion-row>
+    <ion-content :fullscreen="true" class="">
+      <iframe v-if="post" :src="post.url" frameborder="0"></iframe>
 
-      <ion-row>
-        <ion-col size="4">
-          <ion-button fill="clear" size="small" expand="block">
-            <ion-icon :icon="shareOutline" slot="start"/>
-            Share
-          </ion-button>
-        </ion-col>
-        <ion-col size="4">
-          <ion-button fill="clear" size="small" expand="block">
-            <ion-icon :icon="chatboxEllipsesOutline" slot="start"/>
-            24
-          </ion-button>
-        </ion-col>
-        <ion-col size="4">
-          <ion-button fill="clear" size="small" expand="block">
-            <ion-icon :icon="fishOutline" slot="start"/>
-            127
-          </ion-button>
-        </ion-col>
-      </ion-row>
+      <p v-if="!post">Loading...</p>
+
+      <ion-card v-if="post" class="ion-no-margin">
+        <ion-row>
+          <ion-col size="4">
+            <ion-button fill="clear" size="small" expand="block">
+              <ion-icon :icon="shareOutline" slot="start"/>
+              Share
+            </ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button fill="clear" size="small" expand="block">
+              <ion-icon :icon="chatboxEllipsesOutline" slot="start"/>
+              {{ post.comment_count }}
+            </ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button fill="clear" size="small" expand="block">
+              <ion-icon :icon="fishOutline" slot="start"/>
+              {{ post.likes }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
     </ion-content>
   </ion-page>
 </template>
@@ -45,25 +47,66 @@ import {
   IonRow,
   IonCol,
   IonIcon,
-  IonButton
+  IonButton,
+  IonCard,
+  IonHeader,
+  IonToolbar,
+  IonBackButton,
+  IonButtons,
+  IonTitle,
 } from '@ionic/vue';
+import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} from 'ionicons/icons';
+
+const axios = require("axios").default
 
 export default {
   name: "PostWebView",
-    props: {
-    post: Object
-  },
   components: {
     IonContent,
     IonPage,
     IonRow,
     IonCol,
     IonIcon,
-    IonButton
+    IonButton,
+    IonCard,
+    IonHeader,
+    IonToolbar,
+    IonBackButton,
+    IonButtons,
+    IonTitle,
   },
+  data() {
+    return {
+      shareOutline,
+      chatboxEllipsesOutline,
+      fishOutline,
+      personCircleOutline,
+      post: {}
+    }
+  },
+  created() {
+    const post_id = this.$route.params.id
+    let host = ''
+
+    if (process.env.NODE_ENV === 'development') {
+      host = 'http://localhost'
+    }
+
+    axios.get(`${host}/post/summary/${post_id}`)
+        .then(res => {
+          this.post = res.data.post
+        })
+
+  }
+
 }
 </script>
 
 <style scoped>
+iframe {
+  height: 94%;
+  width: 100%;
+}
+
 
 </style>

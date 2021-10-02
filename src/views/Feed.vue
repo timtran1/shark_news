@@ -12,9 +12,9 @@
       <!--        </ion-toolbar>-->
       <!--      </ion-header>-->
 
-      <div v-for="post in posts" :key="post.url" class="ion-padding post-container">
+      <div v-for="post in posts" :key="post.id" @click="open_post(post.id)" class="ion-padding post-container">
         <h4>{{ post.title }}</h4>
-        <ion-img class="post-img" :src="post.image"/>
+        <ion-img class="post-img" v-if="post.image" :src="post.image"/>
         <p>{{ post.subtext }}</p>
 
         <ion-row class="user-name-row">
@@ -103,6 +103,9 @@ export default {
     }
   },
   methods: {
+    open_post(id){
+      this.$router.push(`/post/view/${id}`)
+    },
     async init_new_user() {
       let res = await axios.get('http://localhost/new_user')
       await Storage.set({
