@@ -39,6 +39,10 @@ const routes = [
     {
         path: '/post/view/:id',
         component: () => import('@/components/PostWebView.vue')
+    },
+    {
+        path: '/post/discussion/:id',
+        component: () => import('@/components/PostDiscussionView.vue')
     }
 ]
 

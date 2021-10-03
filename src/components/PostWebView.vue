@@ -23,7 +23,7 @@
             </ion-button>
           </ion-col>
           <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block">
+            <ion-button fill="clear" size="small" expand="block" @click="open_post_discussion($route.params.id)">
               <ion-icon :icon="chatboxEllipsesOutline" slot="start"/>
               {{ post.comment_count }}
             </ion-button>
@@ -96,9 +96,12 @@ export default {
         .then(res => {
           this.post = res.data.post
         })
-
+  },
+  methods: {
+    open_post_discussion(id) {
+      this.$router.push(`/post/discussion/${id}`)
+    },
   }
-
 }
 </script>
 

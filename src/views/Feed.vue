@@ -36,7 +36,7 @@
             </ion-button>
           </ion-col>
           <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block">
+            <ion-button fill="clear" size="small" expand="block" @click.stop="open_post_discussion(post.id)">
               <ion-icon :icon="chatboxEllipsesOutline" slot="start"/>
               {{ post.comment_count }}
             </ion-button>
@@ -103,8 +103,11 @@ export default {
     }
   },
   methods: {
-    open_post(id){
+    open_post(id) {
       this.$router.push(`/post/view/${id}`)
+    },
+    open_post_discussion(id) {
+      this.$router.push(`/post/discussion/${id}`)
     },
     async init_new_user() {
       let res = await axios.get('http://localhost/new_user')
