@@ -9,8 +9,10 @@
 
         <ion-row class="user-name-row">
           <ion-col size="4" class="ion-justify-content-center" color="light">
-          <span>  <ion-icon :icon="personCircleOutline" color="light"/>
-            user56545345</span>
+          <span>
+            <ion-icon :icon="personCircleOutline" color="light"/>
+            user56545345
+          </span>
           </ion-col>
           <ion-col size="4">
           </ion-col>
@@ -37,12 +39,13 @@ import {
   IonIcon,
 } from '@ionic/vue';
 import PostSummary from "../components/PostSummary";
-import {Storage} from '@capacitor/storage';
+import api from "../base/api";
 
 const axios = require("axios").default
 
 export default {
   name: 'Feed',
+  mixins: [api],
   components: {
     IonContent,
     IonPage,
@@ -58,49 +61,20 @@ export default {
     }
   },
   created() {
-    if (process.env.NODE_ENV === 'development') {
-      this.fetch_feed()
-    }
+    this.fetch_feed()
   },
   methods: {
     open_post(id) {
       this.$router.push(`/post/view/${id}`)
     },
-    async init_new_user() {
-      let res = await axios.get('http://localhost/new_user')
-      await Storage.set({
-        key: 'token',
-        value: res.data.token,
-      })
-      return true
-    },
+
     async fetch_feed() {
-      const feed_url = 'http://localhost/feed'
-      let token = await Storage.get({key: 'token'})
-
-      if (token.value) {
-
-        try {
-          let res = await axios.get(feed_url, {headers: {'Authorization': `Bearer ${token.value}`}})
-          this.posts = res.data.posts
-          return true
-        } catch (e) {
-          await this.init_new_user()
-          token = await Storage.get({key: 'token'})
-          let res = await axios.get(feed_url, {headers: {'Authorization': `Bearer ${token.value}`}})
-          this.posts = res.data.posts
-          return true
-        }
-
-      } else {
-
-        await this.init_new_user()
-        token = await Storage.get({key: 'token'})
-        let res = await axios.get(feed_url, {headers: {'Authorization': `Bearer ${token.value}`}})
-        this.posts = res.data.posts
-        return true
-
-      }
+      let token = this.$store.state.token
+      let res = await axios.get(`${this.host}/feed`, {
+        headers: {'Authorization': `Bearer ${token}`}
+      })
+      this.posts = res.data.posts
+      return true
     }
   }
 }

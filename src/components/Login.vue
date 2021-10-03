@@ -40,11 +40,13 @@ import {
   IonButtons,
   IonTitle,
 } from '@ionic/vue';
+import api from "../base/api";
 import {Storage} from "@capacitor/storage";
 import {default as axios} from "axios";
 
 export default {
   name: "Login",
+  mixins: [api],
   components: {
     IonContent,
     IonPage,
@@ -64,7 +66,7 @@ export default {
   },
   methods: {
     async init_new_user() {
-      let res = await axios.get('http://localhost/new_user')
+      let res = await axios.get(`${this.host}/new_user`)
       await Storage.set({
         key: 'token',
         value: res.data.token,
@@ -74,20 +76,13 @@ export default {
     async submit() {
       let token = await Storage.get({key: 'token'})
       const headers = {Authorization: `Bearer ${token.value}`}
-      let host = ''
-
-      if (process.env.NODE_ENV === 'development') {
-        host = 'http://localhost'
-      } else {
-        host = ''
-      }
 
       if (!token.value) {
         await this.init_new_user()
         token = await Storage.get({key: 'token'})
       }
 
-      const res = await axios.get(`${host}/login`, {
+      const res = await axios.get(`${this.host}/login`, {
         params: {
           email: this.email,
           password: this.password

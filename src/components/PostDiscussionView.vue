@@ -50,11 +50,12 @@ import {
 import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} from 'ionicons/icons';
 import Comment from "./Comment";
 import PostSummary from "../components/PostSummary";
-
+import api from "../base/api";
 const axios = require("axios").default
 
 export default {
   name: "PostDiscussionView",
+  mixins: [api],
   components: {
     IonContent,
     IonPage,
@@ -78,28 +79,11 @@ export default {
   },
   created() {
     const post_id = this.$route.params.id
-    let host = ''
-
-    if (process.env.NODE_ENV === 'development') {
-      host = 'http://localhost'
-    }
-
-    axios.get(`${host}/post/discussion/${post_id}`)
+    axios.get(`${this.host}/post/discussion/${post_id}`)
         .then(res => {
           this.post = res.data.post
         })
   },
-  computed: {
-    host() {
-      let host = ''
-
-      if (process.env.NODE_ENV === 'development') {
-        host = 'http://localhost'
-      }
-
-      return host
-    }
-  }
 }
 </script>
 

@@ -17,13 +17,13 @@
       </ion-col>
     </ion-row>
 
-    <ion-row v-if="!hidden" class="ion-padding-start">
+    <ion-row v-show="!hidden" class="ion-padding-start">
       <ion-col size="12">
         {{ comment.content }}
       </ion-col>
     </ion-row>
 
-    <div v-if="!hidden">
+    <div v-show="!hidden">
       <div v-for="child in comment.children" :key="child.id" class="ion-padding-start">
         <comment :comment="child" :is_child="true"></comment>
       </div>
