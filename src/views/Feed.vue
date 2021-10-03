@@ -18,26 +18,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row>
-          <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block">
-              <ion-icon :icon="shareOutline" slot="start"/>
-              Share
-            </ion-button>
-          </ion-col>
-          <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block" @click.stop="open_post_discussion(post.id)">
-              <ion-icon :icon="chatboxEllipsesOutline" slot="start"/>
-              {{ post.comment_count }}
-            </ion-button>
-          </ion-col>
-          <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block">
-              <ion-icon :icon="fishOutline" slot="start"/>
-              {{ post.likes }}
-            </ion-button>
-          </ion-col>
-        </ion-row>
+        <post-summary :post="post"/>
 
         <div class="bottom-divider"></div>
       </div>
@@ -54,9 +35,8 @@ import {
   IonRow,
   IonCol,
   IonIcon,
-  IonButton
 } from '@ionic/vue';
-import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} from 'ionicons/icons';
+import PostSummary from "../components/PostSummary";
 import {Storage} from '@capacitor/storage';
 
 const axios = require("axios").default
@@ -70,14 +50,10 @@ export default {
     IonRow,
     IonCol,
     IonIcon,
-    IonButton
+    PostSummary
   },
   data() {
     return {
-      shareOutline,
-      chatboxEllipsesOutline,
-      fishOutline,
-      personCircleOutline,
       posts: []
     }
   },
@@ -89,9 +65,6 @@ export default {
   methods: {
     open_post(id) {
       this.$router.push(`/post/view/${id}`)
-    },
-    open_post_discussion(id) {
-      this.$router.push(`/post/discussion/${id}`)
     },
     async init_new_user() {
       let res = await axios.get('http://localhost/new_user')

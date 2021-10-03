@@ -15,26 +15,7 @@
       <p v-if="!post">Loading...</p>
 
       <ion-card v-if="post" class="ion-no-margin">
-        <ion-row>
-          <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block">
-              <ion-icon :icon="shareOutline" slot="start"/>
-              Share
-            </ion-button>
-          </ion-col>
-          <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block" @click="open_post_discussion($route.params.id)">
-              <ion-icon :icon="chatboxEllipsesOutline" slot="start"/>
-              {{ post.comment_count }}
-            </ion-button>
-          </ion-col>
-          <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block">
-              <ion-icon :icon="fishOutline" slot="start"/>
-              {{ post.likes }}
-            </ion-button>
-          </ion-col>
-        </ion-row>
+        <post-summary :post="post"/>
       </ion-card>
     </ion-content>
   </ion-page>
@@ -44,10 +25,6 @@
 import {
   IonPage,
   IonContent,
-  IonRow,
-  IonCol,
-  IonIcon,
-  IonButton,
   IonCard,
   IonHeader,
   IonToolbar,
@@ -56,6 +33,7 @@ import {
   IonTitle,
 } from '@ionic/vue';
 import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} from 'ionicons/icons';
+import PostSummary from "../components/PostSummary";
 
 const axios = require("axios").default
 
@@ -64,16 +42,13 @@ export default {
   components: {
     IonContent,
     IonPage,
-    IonRow,
-    IonCol,
-    IonIcon,
-    IonButton,
     IonCard,
     IonHeader,
     IonToolbar,
     IonBackButton,
     IonButtons,
     IonTitle,
+    PostSummary
   },
   data() {
     return {
@@ -97,11 +72,6 @@ export default {
           this.post = res.data.post
         })
   },
-  methods: {
-    open_post_discussion(id) {
-      this.$router.push(`/post/discussion/${id}`)
-    },
-  }
 }
 </script>
 

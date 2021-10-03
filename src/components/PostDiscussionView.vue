@@ -19,36 +19,16 @@
     <ion-content :fullscreen="true" class="">
       <div v-if="post" class="post-container ion-padding">
 
-        <h4 class="ion-no-margin">{{ post.title }}</h4>
+        <h4>{{ post.title }}</h4>
         <ion-img class="post-img" v-if="post.image" :src="post.image"/>
         <p>{{ post.subtext }}</p>
 
-        <ion-row>
-          <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block">
-              <ion-icon :icon="shareOutline" slot="start"/>
-              Share
-            </ion-button>
-          </ion-col>
-          <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block">
-              <ion-icon :icon="chatboxEllipsesOutline" slot="start"/>
-              {{ post.comment_count }}
-            </ion-button>
-          </ion-col>
-          <ion-col size="4">
-            <ion-button fill="clear" size="small" expand="block">
-              <ion-icon :icon="fishOutline" slot="start"/>
-              {{ post.likes }}
-            </ion-button>
-          </ion-col>
-        </ion-row>
+        <post-summary :post="post"/>
 
         <div class="bottom-divider"></div>
       </div>
 
       <comment v-for="comment in post.comments" :key="comment.id" :comment="comment"/>
-
 
     </ion-content>
   </ion-page>
@@ -58,9 +38,6 @@
 import {
   IonPage,
   IonContent,
-  IonRow,
-  IonCol,
-  IonIcon,
   IonButton,
   IonHeader,
   IonToolbar,
@@ -70,6 +47,8 @@ import {
 } from '@ionic/vue';
 import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} from 'ionicons/icons';
 import Comment from "./Comment";
+import PostSummary from "../components/PostSummary";
+
 const axios = require("axios").default
 
 export default {
@@ -77,16 +56,14 @@ export default {
   components: {
     IonContent,
     IonPage,
-    IonRow,
-    IonCol,
-    IonIcon,
     IonButton,
     IonHeader,
     IonToolbar,
     IonBackButton,
     IonButtons,
     IonImg,
-    Comment
+    Comment,
+    PostSummary
   },
   data() {
     return {
