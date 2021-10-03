@@ -47,25 +47,7 @@
         <div class="bottom-divider"></div>
       </div>
 
-
-      <div class="ion-padding" v-for="comment in post.comments" :key="comment.id">
-
-        <ion-row>
-          <ion-col size="12">
-            <ion-button color="medium" size="small" fill="clear">
-              <ion-img :src="host + comment.user.image" class="user-avatar"/>
-              <span class="user-name">{{ comment.user.name }}</span>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-padding-start">
-          <ion-col size="12">
-            {{ comment.content }}
-          </ion-col>
-        </ion-row>
-
-      </div>
+      <comment v-for="comment in post.comments" :key="comment.id" :comment="comment"/>
 
 
     </ion-content>
@@ -87,11 +69,11 @@ import {
   IonImg
 } from '@ionic/vue';
 import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} from 'ionicons/icons';
-
+import Comment from "./Comment";
 const axios = require("axios").default
 
 export default {
-  name: "PostWebView",
+  name: "PostDiscussionView",
   components: {
     IonContent,
     IonPage,
@@ -103,7 +85,8 @@ export default {
     IonToolbar,
     IonBackButton,
     IonButtons,
-    IonImg
+    IonImg,
+    Comment
   },
   data() {
     return {

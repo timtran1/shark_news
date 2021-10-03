@@ -1,16 +1,6 @@
 <template>
   <ion-page>
-    <!--    <ion-header>-->
-    <!--      <ion-toolbar>-->
-    <!--&lt;!&ndash;        <ion-title>Feed</ion-title>&ndash;&gt;-->
-    <!--      </ion-toolbar>-->
-    <!--    </ion-header>-->
     <ion-content :fullscreen="true">
-      <!--      <ion-header collapse="condense">-->
-      <!--        <ion-toolbar>-->
-      <!--&lt;!&ndash;          <ion-title size="large">Feed</ion-title>&ndash;&gt;-->
-      <!--        </ion-toolbar>-->
-      <!--      </ion-header>-->
 
       <div v-for="post in posts" :key="post.id" @click="open_post(post.id)" class="ion-padding post-container">
         <h4>{{ post.title }}</h4>
@@ -59,9 +49,6 @@
 <script>
 import {
   IonPage,
-  // IonHeader,
-  // IonToolbar,
-  // IonTitle,
   IonContent,
   IonImg,
   IonRow,
@@ -77,9 +64,6 @@ const axios = require("axios").default
 export default {
   name: 'Feed',
   components: {
-    // IonHeader,
-    // IonToolbar,
-    // IonTitle,
     IonContent,
     IonPage,
     IonImg,
