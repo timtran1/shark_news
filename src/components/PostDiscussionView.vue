@@ -30,6 +30,8 @@
 
       <comment v-for="comment in post.comments" :key="comment.id" :comment="comment"/>
 
+      <div class="ion-padding"></div>
+
     </ion-content>
   </ion-page>
 </template>

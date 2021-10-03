@@ -36,7 +36,9 @@
 import {
   IonRow,
   IonCol,
-  IonIcon
+  IonIcon,
+  IonImg,
+  IonButton
 } from '@ionic/vue';
 import {
   chevronDownOutline,
@@ -48,7 +50,9 @@ export default {
   components: {
     IonRow,
     IonCol,
-    IonIcon
+    IonIcon,
+    IonImg,
+    IonButton
   },
   props: {
     comment: Object,

@@ -15,7 +15,7 @@
     </ion-col>
     <ion-col size="4">
       <ion-button fill="clear" size="small" expand="block">
-        <ion-img :src="require('@/assets/ss.png')"/>
+        <ion-img :src="require('@/assets/shark-outline.svg')"/>
         {{ $props.post.likes }}
       </ion-button>
     </ion-col>
@@ -28,7 +28,8 @@ import {
   IonRow,
   IonCol,
   IonIcon,
-  IonImg
+  IonImg,
+  IonButton
 } from '@ionic/vue';
 import {
   shareOutline,
@@ -41,7 +42,8 @@ export default {
     IonRow,
     IonCol,
     IonIcon,
-    IonImg
+    IonImg,
+    IonButton
   },
   props: {
     post: Object,
