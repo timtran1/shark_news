@@ -46,12 +46,13 @@ import {
   IonTitle,
   alertController
 } from '@ionic/vue';
-import {Storage} from "@capacitor/storage";
+import api from "../base/api";
 
 const axios = require("axios").default
 
 export default {
   name: "SignUp",
+  mixins: [api],
   components: {
     IonContent,
     IonPage,
@@ -82,17 +83,10 @@ export default {
         await alert.present()
       }
 
-      const token = await Storage.get({key: 'token'})
-      const headers = {Authorization: `Bearer ${token.value}`}
-      let host = ''
+      const token = this.$store.state.token
+      const headers = {Authorization: `Bearer ${token}`}
 
-      if (process.env.NODE_ENV === 'development') {
-        host = 'http://localhost'
-      } else {
-        host = ''
-      }
-
-      const res = await axios.get(`${host}/signup`, {
+      const res = await axios.get(`${this.host}/signup`, {
         params: {
           name: this.name,
           email: this.email,
@@ -101,12 +95,8 @@ export default {
         headers
       })
 
-      await Storage.set({
-        key: 'uid',
-        value: res.data.uid
-      })
-
-        this.$router.back()
+      this.$store.commit('set_uid', res.data.uid)
+      this.$router.back()
     }
   }
 }

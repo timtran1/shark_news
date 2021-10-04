@@ -14,7 +14,7 @@
       </ion-button>
     </ion-col>
     <ion-col size="4">
-      <ion-button fill="clear" size="small" expand="block">
+      <ion-button :fill="like_fill" size="small" expand="block" @click.stop="like">
         <ion-img :src="require('@/assets/shark-outline.svg')"/>
         {{ $props.post.likes }}
       </ion-button>
@@ -35,9 +35,14 @@ import {
   shareOutline,
   chatboxEllipsesOutline,
 } from 'ionicons/icons';
+import api from "../base/api";
+
+const axios = require("axios").default
+
 
 export default {
   name: "PostSummary",
+  mixins: [api],
   components: {
     IonRow,
     IonCol,
@@ -54,11 +59,25 @@ export default {
       chatboxEllipsesOutline,
     }
   },
+  computed: {
+    like_fill() {
+      return this.$props.post.liked ? 'outline' : 'clear'
+    }
+  },
   methods: {
     open_post_discussion(id) {
       let path = `/post/discussion/${id}`
       if (path !== this.$route.path) this.$router.push(path)
     },
+    like() {
+      if (!this.$props.post.liked) {
+        axios.get(`${this.host}/post/like/${this.$props.post.id}`, {
+          headers: this.headers
+        })
+        this.$props.post.liked = true
+        this.$props.post.likes++
+      }
+    }
   }
 }
 </script>

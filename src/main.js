@@ -1,8 +1,9 @@
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router';
-import init_store from './store'
+import init_store from './store/index'
 import {IonicVue} from '@ionic/vue';
+// import {Device} from '@capacitor/device';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -26,8 +27,6 @@ import './theme/variables.css';
 
 async function Application() {
     const store = await init_store()
-
-    console.log(store)
 
     const app = createApp(App)
         .use(IonicVue)

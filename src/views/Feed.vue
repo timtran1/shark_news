@@ -10,7 +10,7 @@
         <ion-row class="user-name-row">
           <ion-col size="4" class="ion-justify-content-center" color="light">
           <span>
-            <ion-icon :icon="personCircleOutline" color="light"/>
+<!--            <ion-icon :icon="personCircleOutline" color="light"/>-->
             user56545345
           </span>
           </ion-col>
@@ -36,7 +36,6 @@ import {
   IonImg,
   IonRow,
   IonCol,
-  IonIcon,
 } from '@ionic/vue';
 import PostSummary from "../components/PostSummary";
 import api from "../base/api";
@@ -52,7 +51,6 @@ export default {
     IonImg,
     IonRow,
     IonCol,
-    IonIcon,
     PostSummary
   },
   data() {
@@ -69,9 +67,8 @@ export default {
     },
 
     async fetch_feed() {
-      let token = this.$store.state.token
       let res = await axios.get(`${this.host}/feed`, {
-        headers: {'Authorization': `Bearer ${token}`}
+        headers: this.headers
       })
       this.posts = res.data.posts
       return true

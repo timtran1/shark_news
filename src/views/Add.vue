@@ -8,11 +8,7 @@
 
     <ion-content :fullscreen="true" class="ion-padding">
 
-      <auth-options v-if="!loading && !uid"/>
-
-      <p v-if="loading">Loading...</p>
-
-      <form class="ion-padding" v-if="uid">
+      <form v-if="uid" class="ion-padding">
 
         <ion-label position="stacked">Title</ion-label>
         <ion-input clear-input placeholder="Give your post a title" required></ion-input>
@@ -21,13 +17,14 @@
         <ion-input clear-input placeholder="Link your article here"></ion-input>
 
         <ion-label position="stacked">Subtext (optional)</ion-label>
-        <ion-input clear-input></ion-input>
+        <ion-textarea clear-input placeholder="Include #hashtags to help your post reach relevance"></ion-textarea>
 
         <ion-button type="submit" color="primary" expand="block" class="ion-margin">
           Submit
         </ion-button>
       </form>
 
+      <auth-options v-else/>
 
     </ion-content>
   </ion-page>
@@ -42,13 +39,15 @@ import {
   IonContent,
   IonLabel,
   IonInput,
-  IonButton
+  IonButton,
+    IonTextarea
 } from '@ionic/vue';
-import {Storage} from "@capacitor/storage";
+import api from "../base/api";
 import AuthOptions from "../components/AuthOptions";
 
 export default {
   name: 'Add',
+  mixins: [api],
   components: {
     IonHeader,
     IonToolbar,
@@ -58,21 +57,8 @@ export default {
     IonLabel,
     IonInput,
     IonButton,
+    IonTextarea,
     AuthOptions
   },
-  created() {
-    Storage.get({key: 'uid'})
-        .then(uid => {
-          console.log({uid})
-          this.loading = false
-          this.uid = uid.value
-        })
-  },
-  data() {
-    return {
-      uid: null,
-      loading: true
-    }
-  }
 }
 </script>

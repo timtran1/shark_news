@@ -41,7 +41,6 @@ import {
   IonTitle,
 } from '@ionic/vue';
 import api from "../base/api";
-import {Storage} from "@capacitor/storage";
 import {default as axios} from "axios";
 
 export default {
@@ -65,36 +64,16 @@ export default {
     }
   },
   methods: {
-    async init_new_user() {
-      let res = await axios.get(`${this.host}/new_user`)
-      await Storage.set({
-        key: 'token',
-        value: res.data.token,
-      })
-      return true
-    },
     async submit() {
-      let token = await Storage.get({key: 'token'})
-      const headers = {Authorization: `Bearer ${token.value}`}
-
-      if (!token.value) {
-        await this.init_new_user()
-        token = await Storage.get({key: 'token'})
-      }
-
       const res = await axios.get(`${this.host}/login`, {
         params: {
           email: this.email,
           password: this.password
-        },
-        headers
+        }
       })
 
-      await Storage.set({
-        key: 'uid',
-        value: res.data.uid
-      })
-
+      this.$store.commit('set_uid', res.data.uid)
+      this.$store.commit('set_token', res.data.token)
       this.$router.back()
     }
   }

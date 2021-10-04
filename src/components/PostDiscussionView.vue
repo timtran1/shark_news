@@ -51,6 +51,7 @@ import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} 
 import Comment from "./Comment";
 import PostSummary from "../components/PostSummary";
 import api from "../base/api";
+
 const axios = require("axios").default
 
 export default {
@@ -79,7 +80,9 @@ export default {
   },
   created() {
     const post_id = this.$route.params.id
-    axios.get(`${this.host}/post/discussion/${post_id}`)
+    axios.get(`${this.host}/post/discussion/${post_id}`,
+        {headers: this.headers}
+    )
         .then(res => {
           this.post = res.data.post
         })
