@@ -11,15 +11,26 @@
       </ion-col>
       <ion-col size="2">
         <ion-button color="medium" size="small" fill="clear">
-          <ion-icon v-if="!hidden" :icon="chevronDownOutline" slot="icon-only"/>
-          <ion-icon v-else :icon="chevronBackOutline" slot="icon-only"/>
+          <ion-icon v-if="!hidden" :icon="chevronDownOutline" slot="end"/>
+          <ion-icon v-else :icon="chevronBackOutline" slot="end"/>
         </ion-button>
       </ion-col>
     </ion-row>
 
     <ion-row v-show="!hidden" class="ion-padding-start">
-      <ion-col size="12">
+      <ion-col size="8">
         {{ comment.content }}
+      </ion-col>
+      <ion-col size="2" class="ion-no-padding">
+        <ion-button color="medium" size="small" fill="clear" class="ion-no-margin">
+          Reply
+        </ion-button>
+      </ion-col>
+      <ion-col size="2" class="ion-no-padding">
+        <ion-button color="medium" size="small" fill="clear" class="ion-no-margin">
+          <ion-img :src="require('@/assets/shark.svg')" class="comment-like-icon" />
+          {{ comment.likes }}
+        </ion-button>
       </ion-col>
     </ion-row>
 
@@ -101,5 +112,10 @@ span {
 
 .isChild {
   border-left: 1px solid lightgrey;
+}
+
+.comment-like-icon {
+  height: 20px;
+  margin-right: 3px;
 }
 </style>

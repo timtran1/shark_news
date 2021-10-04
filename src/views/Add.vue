@@ -17,7 +17,7 @@
         <ion-input clear-input placeholder="Link your article here"></ion-input>
 
         <ion-label position="stacked">Subtext (optional)</ion-label>
-        <ion-textarea clear-input placeholder="Include #hashtags to help your post reach relevance"></ion-textarea>
+        <ion-textarea clear-input rows="5" placeholder="Include #hashtags to help your post reach relevance"></ion-textarea>
 
         <ion-button type="submit" color="primary" expand="block" class="ion-margin">
           Submit

@@ -15,7 +15,7 @@
     </ion-col>
     <ion-col size="4">
       <ion-button :fill="like_fill" size="small" expand="block" @click.stop="like">
-        <ion-img :src="require('@/assets/shark-outline.svg')"/>
+        <ion-img :src="require('@/assets/shark.svg')"/>
         {{ $props.post.likes }}
       </ion-button>
     </ion-col>
@@ -70,13 +70,12 @@ export default {
       if (path !== this.$route.path) this.$router.push(path)
     },
     like() {
-      if (!this.$props.post.liked) {
-        axios.get(`${this.host}/post/like/${this.$props.post.id}`, {
-          headers: this.headers
-        })
-        this.$props.post.liked = true
-        this.$props.post.likes++
-      }
+      axios.get(`${this.host}/post/like/${this.$props.post.id}`, {
+        headers: this.headers
+      })
+      this.$props.post.liked = !this.$props.post.liked
+      if (this.$props.post.liked) this.$props.post.likes++
+      else this.$props.post.likes--
     }
   }
 }

@@ -29,7 +29,7 @@
       <form class="ion-padding-start ion-padding-end ion-padding-top" @submit.prevent="add_comment">
         <ion-row>
           <ion-col size="10">
-            <ion-textarea ref="comment" v-model="comment" placeholder="Add a comment..."/>
+            <ion-textarea ref="comment" v-model="comment" placeholder="Add a comment..." required/>
           </ion-col>
           <ion-col size="2">
             <ion-button type="submit" fill="clear" size="small">
@@ -120,6 +120,11 @@ export default {
   },
   methods: {
     async add_comment() {
+      if (!this.uid) {
+        this.$router.push('/auth')
+        return
+      }
+
       if (this.comment) {
         const res = await axios.get(`${this.host}/post/comment`, {
           params: {

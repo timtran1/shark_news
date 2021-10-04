@@ -29,6 +29,14 @@ const routes = [
         ]
     },
     {
+        path: '/auth',
+        component: () => import('@/components/AuthOptions.vue'),
+        props: {
+            show_header: true,
+            return_after_auth: true
+        }
+    },
+    {
         path: '/signup',
         component: () => import('@/components/SignUp.vue')
     },

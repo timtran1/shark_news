@@ -7,11 +7,10 @@
         <ion-img class="post-img" v-if="post.image" :src="post.image"/>
         <p>{{ post.subtext }}</p>
 
-        <ion-row class="user-name-row">
+        <ion-row class="user-name-row" v-if="post.user">
           <ion-col size="4" class="ion-justify-content-center" color="light">
           <span>
-<!--            <ion-icon :icon="personCircleOutline" color="light"/>-->
-            user56545345
+            {{ post.user.name }}
           </span>
           </ion-col>
           <ion-col size="4">

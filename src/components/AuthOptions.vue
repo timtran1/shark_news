@@ -1,8 +1,17 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true" class="ion-padding  ion-justify-content-center">
+    <ion-header v-if="$props.show_header" collapse="condense" class="ion-margin-bottom">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/tabs/feed"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Signup or Login</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <div class="ion-padding  ion-justify-content-center">
+    <ion-content :fullscreen="true" class="ion-padding ion-justify-content-center">
+
+      <div class="auth-options ion-padding ion-justify-content-center">
 
         <ion-row>
           <ion-col size="12">
@@ -41,7 +50,12 @@ import {
   IonButton,
   IonRow,
   IonIcon,
-  IonCol
+  IonCol,
+  IonHeader,
+  IonToolbar,
+  IonBackButton,
+  IonButtons,
+  IonTitle
 } from '@ionic/vue';
 import {
   // mailOutline,
@@ -49,28 +63,49 @@ import {
   logInOutline,
   personAddOutline
 } from 'ionicons/icons';
+import api from "../base/api";
+
 
 export default {
   name: "AuthOptions",
+  mixins: [api],
   components: {
     IonContent,
     IonPage,
     IonButton,
     IonRow,
     IonIcon,
-    IonCol
+    IonCol,
+    IonHeader,
+    IonToolbar,
+    IonBackButton,
+    IonButtons,
+    IonTitle
+  },
+  props: {
+    show_header: Boolean,
+    return_after_auth: Boolean
   },
   data() {
     return {
       logInOutline,
       personAddOutline
     }
+  },
+  watch: {
+    uid(new_uid, old_uid) {
+      console.log(new_uid, old_uid)
+      if (new_uid && this.$props.return_after_auth) {
+        console.log('return')
+        this.$router.back()
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-div {
+.auth-options {
   display: flex;
   flex-direction: column;
   padding-top: 40%;

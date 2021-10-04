@@ -13,7 +13,7 @@
     <ion-content class="ion-padding ion-justify-content-center ion-align-items-center">
       <form class="ion-padding" @submit.prevent="submit">
 
-        <ion-input clear-input placeholder="Choose a username" required v-model="name"></ion-input>
+        <ion-input clear-input placeholder="Choose your username" required v-model="name"></ion-input>
 
         <ion-input clear-input placeholder="Email" type="email" autocomplete="email" inputmode="email"
                    required v-model="email"></ion-input>
