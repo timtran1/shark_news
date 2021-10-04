@@ -11,8 +11,6 @@
             <span class="user-name">{{ post.user.name }}</span>
           </ion-button>
         </ion-buttons>
-
-        <!--        <ion-title v-if="post">{{ post.title }}</ion-title>-->
       </ion-toolbar>
     </ion-header>
 
@@ -28,9 +26,28 @@
         <div class="bottom-divider"></div>
       </div>
 
+      <form class="ion-padding-start ion-padding-end ion-padding-top" @submit.prevent="add_comment">
+        <ion-row>
+          <ion-col size="10">
+            <ion-textarea ref="comment" v-model="comment" placeholder="Add a comment..."/>
+          </ion-col>
+          <ion-col size="2">
+            <ion-button type="submit" fill="clear" size="small">
+              <ion-icon :icon="sendOutline" slot="end"/>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+
       <comment v-for="comment in post.comments" :key="comment.id" :comment="comment"/>
 
-      <div class="ion-padding"></div>
+      <div class="ion-padding bottom-pad"></div>
+
+      <!--      <ion-card class="add-comment-hover" @click="focus_comment">-->
+      <!--        <ion-card-content>-->
+      <!--          Add a comment...-->
+      <!--        </ion-card-content>-->
+      <!--      </ion-card>-->
 
     </ion-content>
   </ion-page>
@@ -45,9 +62,15 @@ import {
   IonToolbar,
   IonBackButton,
   IonButtons,
-  IonImg
+  IonImg,
+  IonTextarea,
+  // IonCardContent,
+  // IonCard,
+  IonRow,
+  IonCol,
+  IonIcon
 } from '@ionic/vue';
-import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} from 'ionicons/icons';
+import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline, sendOutline} from 'ionicons/icons';
 import Comment from "./Comment";
 import PostSummary from "../components/PostSummary";
 import api from "../base/api";
@@ -66,6 +89,12 @@ export default {
     IonBackButton,
     IonButtons,
     IonImg,
+    IonTextarea,
+    // IonCardContent,
+    // IonCard,
+    IonRow,
+    IonCol,
+    IonIcon,
     Comment,
     PostSummary
   },
@@ -75,6 +104,8 @@ export default {
       chatboxEllipsesOutline,
       fishOutline,
       personCircleOutline,
+      sendOutline,
+      comment: '',
       post: {}
     }
   },
@@ -87,6 +118,23 @@ export default {
           this.post = res.data.post
         })
   },
+  methods: {
+    async add_comment() {
+      if (this.comment) {
+        const res = await axios.get(`${this.host}/post/comment`, {
+          params: {
+            comment: this.comment,
+            post_id: this.post.id
+          },
+          headers: this.headers
+        })
+
+        const comment = res.data.comment
+        this.post.comments.unshift(comment)
+        this.comment = ''
+      }
+    }
+  }
 }
 </script>
 
@@ -127,5 +175,16 @@ span {
   height: 30px;
   border-radius: 50%;
   margin-right: 5px;
+}
+
+.add-comment-hover {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  color: #8c8c8c;
+}
+
+.bottom-pad {
+  padding-bottom: 5rem;
 }
 </style>
