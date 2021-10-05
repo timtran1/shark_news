@@ -22,13 +22,13 @@
         {{ comment.content }}
       </ion-col>
       <ion-col size="2" class="ion-no-padding">
-        <ion-button color="medium" size="small" fill="clear" class="ion-no-margin">
+        <ion-button color="medium" size="small" fill="clear" class="ion-no-margin" @click.stop="reply">
           Reply
         </ion-button>
       </ion-col>
       <ion-col size="2" class="ion-no-padding">
-        <ion-button color="medium" size="small" fill="clear" class="ion-no-margin">
-          <ion-img :src="require('@/assets/shark.svg')" class="comment-like-icon" />
+        <ion-button :fill="like_fill" color="medium" size="small" class="ion-no-margin" @click.stop="like">
+          <ion-img :src="require('@/assets/shark.svg')" class="comment-like-icon"/>
           {{ comment.likes }}
         </ion-button>
       </ion-col>
@@ -36,7 +36,8 @@
 
     <div v-show="!hidden">
       <div v-for="child in comment.children" :key="child.id" class="ion-padding-start">
-        <comment :comment="child" :is_child="true"></comment>
+        <comment :comment="child" :is_child="true" @reply="reply" :post="$props.post"
+                 :parent_comment="$props.comment"></comment>
       </div>
     </div>
   </div>
@@ -55,9 +56,14 @@ import {
   chevronDownOutline,
   chevronBackOutline
 } from 'ionicons/icons';
+import {default as axios} from "axios";
+import api from "../base/api";
+
 
 export default {
   name: "Comment",
+  mixins: [api],
+  emits: ['reply'],
   components: {
     IonRow,
     IonCol,
@@ -77,19 +83,25 @@ export default {
     }
   },
   computed: {
-    host() {
-      let host = ''
-
-      if (process.env.NODE_ENV === 'development') {
-        host = 'http://localhost'
-      }
-
-      return host
+    like_fill() {
+      return this.$props.comment.liked ? 'outline' : 'clear'
     }
   },
   methods: {
     hide() {
       this.hidden = !this.hidden
+    },
+    like() {
+      axios.get(`${this.host}/comment/like/${this.$props.comment.id}`, {
+        headers: this.headers
+      })
+      this.$props.comment.liked = !this.$props.comment.liked
+      if (this.$props.comment.liked) this.$props.comment.likes++
+      else this.$props.comment.likes--
+    },
+    reply(parent) {
+      if (parent.id) this.$emit('reply', parent)
+      else this.$emit('reply', this.$props.comment)
     }
   }
 }
