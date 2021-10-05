@@ -8,7 +8,9 @@
           <ion-avatar class="ion-text-center">
             <ion-img :src="host + user.image"/>
           </ion-avatar>
-          <h5 class="ion-text-center">{{ user.name }}</h5>
+          <ion-text color="primary">
+              <h5 class="ion-text-center">{{ user.name }}</h5>
+          </ion-text>
           <ion-button class="ion-text-center" color="danger" size="small" fill="outline" @click="logout">Log out
           </ion-button>
 
@@ -20,13 +22,11 @@
           <ion-item v-for="post in user.posts" :key="post.id" @click="open_post(post.id)">
 
             <ion-img class="post-image" :src="post.image" slot="start"/>
-            <!--            <ion-label>-->
             <div class="post-content ion-no-margin" slot="end">
               <p class="ion-no-margin"><small><b>{{ post.title }}</b></small></p>
               <p class="ion-no-margin"><small>{{ post.subtext }}</small></p>
               <post-summary :post="post"/>
             </div>
-            <!--            </ion-label>-->
           </ion-item>
         </ion-list>
 
@@ -48,6 +48,7 @@ import {
   IonList,
   IonItem,
   IonListHeader,
+  IonText
   // IonLabel
 } from '@ionic/vue';
 import AuthOptions from "../components/AuthOptions";
@@ -71,7 +72,11 @@ export default {
     IonList,
     IonItem,
     IonListHeader,
+    IonText,
     PostSummary
+  },
+  props: {
+    user_id: Number
   },
   data() {
     return {
@@ -85,7 +90,17 @@ export default {
             this.user = res.data.user
           })
     }
-
+  },
+  watch: {
+    uid(new_uid, old_uid) {
+      console.log(new_uid, old_uid)
+      if (new_uid) {
+        axios.get(`${this.host}/profile/${this.uid}`)
+            .then(res => {
+              this.user = res.data.user
+            })
+      }
+    }
   },
   methods: {
     async logout() {
