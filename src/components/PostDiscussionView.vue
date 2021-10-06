@@ -15,6 +15,10 @@
     </ion-header>
 
     <ion-content :fullscreen="true" class="">
+      <ion-refresher slot="fixed" @ionRefresh="fetch_post">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
       <div v-if="post" class="post-container ion-padding">
 
         <h4>{{ post.title }}</h4>
@@ -58,6 +62,8 @@ import {
   IonCardContent,
   IonCard,
   IonModal,
+  IonRefresher,
+  IonRefresherContent
   // modalController
 } from '@ionic/vue';
 import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline, sendOutline} from 'ionicons/icons';
@@ -85,7 +91,9 @@ export default {
     IonModal,
     Comment,
     PostSummary,
-    WriteCommentModal
+    WriteCommentModal,
+    IonRefresher,
+    IonRefresherContent
   },
   data() {
     return {
@@ -101,15 +109,16 @@ export default {
     }
   },
   created() {
-    const post_id = this.$route.params.id
-    axios.get(`${this.host}/post/discussion/${post_id}`,
-        {headers: this.headers}
-    )
-        .then(res => {
-          this.post = res.data.post
-        })
+    this.fetch_post()
   },
   methods: {
+    async fetch_post(event = null) {
+      const post_id = this.$route.params.id
+      const res = await axios.get(`${this.host}/post/discussion/${post_id}`, {headers: this.headers})
+      this.post = res.data.post
+
+      if (event) event.target.complete()
+    },
     toggle_write_comment() {
       this.writing_comment = !this.writing_comment
     },

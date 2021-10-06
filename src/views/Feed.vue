@@ -1,6 +1,9 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
+      <ion-refresher slot="fixed" @ionRefresh="fetch_feed">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
 
       <div v-for="post in posts" :key="post.id" @click="open_post(post.id)" class="ion-padding post-container">
         <h4>{{ post.title }}</h4>
@@ -35,6 +38,8 @@ import {
   IonImg,
   IonRow,
   IonCol,
+  IonRefresher,
+  IonRefresherContent
 } from '@ionic/vue';
 import PostSummary from "../components/PostSummary";
 import api from "../base/api";
@@ -50,7 +55,9 @@ export default {
     IonImg,
     IonRow,
     IonCol,
-    PostSummary
+    PostSummary,
+    IonRefresher,
+    IonRefresherContent
   },
   data() {
     return {
@@ -65,11 +72,14 @@ export default {
       this.$router.push(`/post/view/${id}`)
     },
 
-    async fetch_feed() {
+    async fetch_feed(event=null) {
       let res = await axios.get(`${this.host}/feed`, {
         headers: this.headers
       })
       this.posts = res.data.posts
+
+      if (event) event.target.complete()
+      console.log({event})
       return true
     }
   }

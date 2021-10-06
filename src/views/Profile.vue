@@ -1,6 +1,9 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true" class="ion-padding">
+      <ion-refresher slot="fixed" @ionRefresh="fetch_posts">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
 
       <div v-if="uid">
 
@@ -9,7 +12,7 @@
             <ion-img :src="host + user.image"/>
           </ion-avatar>
           <ion-text color="primary">
-              <h5 class="ion-text-center">{{ user.name }}</h5>
+            <h5 class="ion-text-center">{{ user.name }}</h5>
           </ion-text>
           <ion-button class="ion-text-center" color="danger" size="small" fill="outline" @click="logout">Log out
           </ion-button>
@@ -21,7 +24,7 @@
 
           <ion-item v-for="post in user.posts" :key="post.id" @click="open_post(post.id)">
 
-            <ion-img class="post-image" :src="post.image" slot="start"/>
+            <ion-img class="post-image" v-if="post.image" :src="post.image" slot="start"/>
             <div class="post-content ion-no-margin" slot="end">
               <p class="ion-no-margin"><small><b>{{ post.title }}</b></small></p>
               <p class="ion-no-margin"><small>{{ post.subtext }}</small></p>
@@ -48,7 +51,9 @@ import {
   IonList,
   IonItem,
   IonListHeader,
-  IonText
+  IonText,
+  IonRefresher,
+  IonRefresherContent
   // IonLabel
 } from '@ionic/vue';
 import AuthOptions from "../components/AuthOptions";
@@ -73,7 +78,9 @@ export default {
     IonItem,
     IonListHeader,
     IonText,
-    PostSummary
+    PostSummary,
+    IonRefresher,
+    IonRefresherContent
   },
   props: {
     user_id: Number
@@ -84,12 +91,7 @@ export default {
     }
   },
   created() {
-    if (this.uid) {
-      axios.get(`${this.host}/profile/${this.uid}`)
-          .then(res => {
-            this.user = res.data.user
-          })
-    }
+    this.fetch_posts()
   },
   watch: {
     uid(new_uid, old_uid) {
@@ -103,6 +105,13 @@ export default {
     }
   },
   methods: {
+    async fetch_posts(event = null) {
+      if (this.uid) {
+        const res = await axios.get(`${this.host}/profile/${this.uid}`)
+        this.user = res.data.user
+      }
+      if (event) event.target.complete()
+    },
     async logout() {
       const token = await init_user()
       this.$store.commit('set_token', token)
