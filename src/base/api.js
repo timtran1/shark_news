@@ -3,7 +3,7 @@ export default {
     computed: {
         host() {
             if (process.env.NODE_ENV === 'development') return 'http://localhost'
-            return ''
+            return 'https://api.sharknews.live'
         },
         uid() {
             return this.$store.state.uid
