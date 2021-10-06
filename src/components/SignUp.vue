@@ -44,7 +44,8 @@ import {
   IonBackButton,
   IonButtons,
   IonTitle,
-  alertController
+  alertController,
+  toastController
 } from '@ionic/vue';
 import api from "../base/api";
 
@@ -62,7 +63,7 @@ export default {
     IonToolbar,
     IonBackButton,
     IonButtons,
-    IonTitle
+    IonTitle,
   },
   data() {
     return {
@@ -97,6 +98,13 @@ export default {
 
       this.$store.commit('set_uid', res.data.uid)
       this.$router.back()
+      const toast = await toastController
+          .create({
+            message: 'Signup successful!',
+            duration: 2000,
+            color: 'primary'
+          })
+      toast.present();
     }
   }
 }

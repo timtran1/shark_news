@@ -39,6 +39,7 @@ import {
   IonBackButton,
   IonButtons,
   IonTitle,
+  toastController
 } from '@ionic/vue';
 import api from "../base/api";
 import {default as axios} from "axios";
@@ -75,6 +76,13 @@ export default {
       this.$store.commit('set_uid', res.data.uid)
       this.$store.commit('set_token', res.data.token)
       this.$router.back()
+      const toast = await toastController
+          .create({
+            message: 'Logged in!',
+            duration: 2000,
+            color: 'primary'
+          })
+      toast.present();
     }
   }
 }
