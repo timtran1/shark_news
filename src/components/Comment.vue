@@ -92,6 +92,11 @@ export default {
       this.hidden = !this.hidden
     },
     like() {
+      if (!this.uid) {
+        this.$router.push('/auth')
+        return
+      }
+
       axios.get(`${this.host}/comment/like/${this.$props.comment.id}`, {
         headers: this.headers
       })

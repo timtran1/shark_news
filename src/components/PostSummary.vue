@@ -2,7 +2,7 @@
 
   <ion-row>
     <ion-col size="4">
-      <ion-button fill="clear" size="small" expand="block">
+      <ion-button fill="clear" size="small" expand="block" @click.stop="share">
         <ion-icon :icon="shareOutline" slot="start"/>
         Share
       </ion-button>
@@ -36,6 +36,7 @@ import {
   chatboxEllipsesOutline,
 } from 'ionicons/icons';
 import api from "../base/api";
+import {Share} from '@capacitor/share';
 
 const axios = require("axios").default
 
@@ -70,12 +71,26 @@ export default {
       if (path !== this.$route.path) this.$router.push(path)
     },
     like() {
+      if (!this.uid) {
+        this.$router.push('/auth')
+        return
+      }
+
       axios.get(`${this.host}/post/like/${this.$props.post.id}`, {
         headers: this.headers
       })
       this.$props.post.liked = !this.$props.post.liked
       if (this.$props.post.liked) this.$props.post.likes++
       else this.$props.post.likes--
+    },
+    share() {
+      const post = this.$props.post
+      return Share.share({
+        title: `${post.title} - SharkNews`,
+        text: `Shared from SharkNews`,
+        url: `${this.host}/post/discussion/${post.id}`,
+        dialogTitle: 'Share post',
+      });
     }
   }
 }

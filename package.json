@@ -15,6 +15,7 @@
     "@capacitor/device": "^1.0.3",
     "@capacitor/haptics": "1.0.3",
     "@capacitor/keyboard": "1.0.3",
+    "@capacitor/share": "^1.0.4",
     "@capacitor/status-bar": "1.0.3",
     "@capacitor/storage": "^1.2.0",
     "@ionic/vue": "^5.4.0",

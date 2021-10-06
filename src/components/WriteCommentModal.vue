@@ -37,7 +37,8 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonContent
+  IonContent,
+  loadingController
 } from '@ionic/vue';
 import api from "../base/api";
 import {default as axios} from "axios";
@@ -69,6 +70,14 @@ export default {
   },
   methods: {
     async send() {
+      const loading = await loadingController
+          .create({
+            cssClass: 'my-custom-class',
+            message: 'Please wait...',
+            duration: 2000
+          });
+      await loading.present();
+
       let params = {
         comment: this.comment,
         post_id: this.$props.post.id
@@ -84,6 +93,7 @@ export default {
       })
 
       const comment = res.data.comment
+      loading.dismiss()
       this.$emit('send', comment)
 
     },
