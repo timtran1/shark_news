@@ -1,5 +1,11 @@
 <template>
   <ion-page>
+    <ion-header collapse="condense" class="ion-margin-bottom">
+      <ion-toolbar>
+        <!--        <ion-title>New post</ion-title>-->
+      </ion-toolbar>
+    </ion-header>
+
     <ion-content :fullscreen="true">
       <ion-refresher slot="fixed" @ionRefresh="fetch_feed">
         <ion-refresher-content></ion-refresher-content>
@@ -39,7 +45,9 @@ import {
   IonRow,
   IonCol,
   IonRefresher,
-  IonRefresherContent
+  IonRefresherContent,
+  IonHeader,
+  IonToolbar
 } from '@ionic/vue';
 import PostSummary from "../components/PostSummary";
 import api from "../base/api";
@@ -57,7 +65,9 @@ export default {
     IonCol,
     PostSummary,
     IonRefresher,
-    IonRefresherContent
+    IonRefresherContent,
+    IonHeader,
+    IonToolbar
   },
   data() {
     return {
@@ -72,7 +82,7 @@ export default {
       this.$router.push(`/post/view/${id}`)
     },
 
-    async fetch_feed(event=null) {
+    async fetch_feed(event = null) {
       let res = await axios.get(`${this.host}/feed`, {
         headers: this.headers
       })

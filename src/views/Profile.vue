@@ -5,10 +5,10 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <div v-if="uid">
+      <div v-if="uid" class="ion-padding-top">
 
-        <div v-if="user" class="user-container ion-justify-content-center ion-align-items-center ion-padding">
-          <ion-avatar class="ion-text-center">
+        <div v-if="user" class="user-container ion-justify-content-center ion-align-items-center ion-padding ion-margin-top">
+          <ion-avatar class="ion-text-center ion-margin-top">
             <ion-img :src="host + user.image"/>
           </ion-avatar>
           <ion-text color="primary">

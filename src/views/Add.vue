@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-header collapse="condense" class="ion-margin-bottom">
+    <ion-header collapse="condense" class="ion-margin-bottom ion-padding-top">
       <ion-toolbar>
         <ion-title>New post</ion-title>
       </ion-toolbar>
@@ -75,7 +75,7 @@ export default {
        const loading = await loadingController
         .create({
           cssClass: 'my-custom-class',
-          message: 'Please wait...',
+          message: 'Sending...',
           duration: 2000,
         });
        await loading.present()

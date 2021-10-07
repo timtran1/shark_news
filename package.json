@@ -8,13 +8,16 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "sync": "vue-cli-service build && echo UPLOADING && aws s3 sync dist s3://sharknews.live --delete"
+    "sync": "vue-cli-service build && echo UPLOADING && aws s3 sync dist s3://sharknews.live --delete",
+    "build-ios": "ionic capacitor sync ios",
+    "run-ios": "LANG=en_US.UTF-8 ionic capacitor sync ios && LANG=en_US.UTF-8 ionic capacitor run ios --target=28D45FE3-BB51-4A31-A344-AB51603A18B3"
   },
   "dependencies": {
     "@capacitor/app": "1.0.3",
     "@capacitor/core": "3.2.3",
     "@capacitor/device": "^1.0.3",
     "@capacitor/haptics": "1.0.3",
+    "@capacitor/ios": "^3.2.4",
     "@capacitor/keyboard": "1.0.3",
     "@capacitor/share": "^1.0.4",
     "@capacitor/status-bar": "1.0.3",

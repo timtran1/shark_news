@@ -73,7 +73,7 @@ export default {
       const loading = await loadingController
           .create({
             cssClass: 'my-custom-class',
-            message: 'Please wait...',
+            message: 'Sending...',
             duration: 2000
           });
       await loading.present();

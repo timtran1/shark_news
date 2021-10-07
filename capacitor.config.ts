@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'shark_news_vue',
+  appId: 'live.sharknews.sharknews',
+  appName: 'SharkNews',
   webDir: 'dist',
   bundledWebRuntime: false
 };
