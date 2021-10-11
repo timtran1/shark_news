@@ -19,7 +19,7 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <div v-if="post" class="post-container ion-padding">
+      <div v-if="post" class="post-container ion-padding" @click="open_post">
 
         <h4>{{ post.title }}</h4>
         <ion-img class="post-img" v-if="post.image" :src="post.image"/>
@@ -112,6 +112,10 @@ export default {
     this.fetch_post()
   },
   methods: {
+    open_post() {
+      const post_id = this.$route.params.id
+      this.$router.push(`/post/view/${post_id}`)
+    },
     async fetch_post(event = null) {
       const post_id = this.$route.params.id
       const res = await axios.get(`${this.host}/post/discussion/${post_id}`, {headers: this.headers})

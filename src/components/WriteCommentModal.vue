@@ -18,7 +18,7 @@
       <div class="ion-padding-start ion-padding-end ion-padding-top">
         <ion-row>
           <ion-col size="12">
-            <ion-textarea ref="comment" v-model="comment" required autofocus rows="10"/>
+            <ion-textarea ref="comment" v-model="comment" required autofocus rows="10" placeholder="Type your comment here..."/>
           </ion-col>
         </ion-row>
       </div>

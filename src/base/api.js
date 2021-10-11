@@ -12,5 +12,10 @@ export default {
             let token = this.$store.state.token
             return {'Authorization': `Bearer ${token}`}
         }
+    },
+    methods: {
+        sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
     }
 }

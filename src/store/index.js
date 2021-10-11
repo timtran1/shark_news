@@ -5,7 +5,7 @@ import init_user from "./init_user";
 export default async function init_store() {
     let [token, uid] = await Promise.all([
         Storage.get({key: 'token'}),
-        Storage.get({key: 'uid'})
+        Storage.get({key: 'v_uid'})
     ])
 
     token = token.value || await init_user()
@@ -28,8 +28,8 @@ export default async function init_store() {
             },
             set_uid(state, uid) {
                 Storage.set({
-                    key: 'uid',
-                    value: uid
+                    key: 'v_uid',
+                    value: uid.toString()
                 })
                 state.uid = uid
             },

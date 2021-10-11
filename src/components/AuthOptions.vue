@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-header v-if="$props.show_header" collapse="condense" class="ion-margin-bottom">
+    <ion-header v-if="$props.show_header" collapse="condense" class="ion-margin-bottom ion-padding-top">
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-back-button default-href="/tabs/feed"></ion-back-button>
@@ -93,8 +93,7 @@ export default {
     }
   },
   watch: {
-    uid(new_uid, old_uid) {
-      console.log(new_uid, old_uid)
+    uid(new_uid) {
       if (new_uid && this.$props.return_after_auth) {
         console.log('return')
         this.$router.back()

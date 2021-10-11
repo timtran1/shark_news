@@ -94,8 +94,7 @@ export default {
     this.fetch_posts()
   },
   watch: {
-    uid(new_uid, old_uid) {
-      console.log(new_uid, old_uid)
+    uid(new_uid) {
       if (new_uid) {
         axios.get(`${this.host}/profile/${this.uid}`)
             .then(res => {

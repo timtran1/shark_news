@@ -89,7 +89,6 @@ export default {
       this.posts = res.data.posts
 
       if (event) event.target.complete()
-      console.log({event})
       return true
     }
   }
