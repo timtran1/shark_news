@@ -132,10 +132,11 @@ span {
 
 <style>
 .user-avatar {
-  width: 30px;
-  height: 30px;
+  width: 27px;
+  height: 27px;
   border-radius: 50%;
   margin-right: 5px;
+  overflow: hidden;
 }
 
 .isChild {
