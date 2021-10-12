@@ -10,6 +10,9 @@
             <ion-img :src="host + post.user.image" class="user-avatar"/>
             <span class="user-name">{{ post.user.name }}</span>
           </ion-button>
+          <ion-button color="medium" size="small" @click="more_actions_post(post)">
+            <ion-icon :icon="ellipsisHorizontalOutline"/>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -30,7 +33,8 @@
         <div class="bottom-divider"></div>
       </div>
 
-      <comment v-for="comment in post.comments" :key="comment.id" :comment="comment" @reply="write_reply"/>
+      <comment v-for="comment in post.comments" :key="comment.id" :comment="comment" @reply="write_reply"
+               @more="more_actions_comment"/>
 
       <div class="ion-padding bottom-pad"></div>
 
@@ -43,6 +47,10 @@
       <ion-modal :is-open="writing_comment">
         <write-comment-modal @dismiss="toggle_write_comment" @send="comment_sent"
                              :post="post" :parent_comment="writing_comment_parent"/>
+      </ion-modal>
+
+      <ion-modal :is-open="writing_report">
+        <content-report-modal @dismiss="toggle_write_report" @send="report_sent" :reasons="reasons"/>
       </ion-modal>
 
     </ion-content>
@@ -63,20 +71,29 @@ import {
   IonCard,
   IonModal,
   IonRefresher,
-  IonRefresherContent
-  // modalController
+  IonRefresherContent,
+  IonIcon
 } from '@ionic/vue';
-import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline, sendOutline} from 'ionicons/icons';
+import {
+  shareOutline,
+  chatboxEllipsesOutline,
+  fishOutline,
+  personCircleOutline,
+  sendOutline,
+  ellipsisHorizontalOutline
+} from 'ionicons/icons';
 import Comment from "./Comment";
 import PostSummary from "../components/PostSummary";
 import WriteCommentModal from "./WriteCommentModal";
+import ContentReportModal from "./ContentReportModal";
 import api from "../base/api";
+import content_report from "../base/content_report";
 
 const axios = require("axios").default
 
 export default {
   name: "PostDiscussionView",
-  mixins: [api],
+  mixins: [api, content_report],
   components: {
     IonContent,
     IonPage,
@@ -93,7 +110,9 @@ export default {
     PostSummary,
     WriteCommentModal,
     IonRefresher,
-    IonRefresherContent
+    IonRefresherContent,
+    ContentReportModal,
+    IonIcon
   },
   data() {
     return {
@@ -102,6 +121,7 @@ export default {
       fishOutline,
       personCircleOutline,
       sendOutline,
+      ellipsisHorizontalOutline,
       comment: '',
       post: {},
       writing_comment: false,

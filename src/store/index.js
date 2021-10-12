@@ -15,7 +15,11 @@ export default async function init_store() {
         state() {
             return {
                 uid,
-                token
+                token,
+                reporting_comment: null,
+                reporting_post: null,
+                reporting: '',
+                writing_report: false,
             }
         },
         mutations: {

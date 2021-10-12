@@ -18,8 +18,13 @@
     </ion-row>
 
     <ion-row v-show="!hidden" class="ion-padding-start">
-      <ion-col size="8">
+      <ion-col size="6">
         {{ comment.content }}
+      </ion-col>
+      <ion-col size="2" class="ion-no-padding">
+        <ion-button color="medium" size="small" fill="clear" class="ion-no-margin" @click.stop="more">
+          <ion-icon :icon="ellipsisHorizontalOutline" slot="end"/>
+        </ion-button>
       </ion-col>
       <ion-col size="2" class="ion-no-padding">
         <ion-button color="medium" size="small" fill="clear" class="ion-no-margin" @click.stop="reply">
@@ -36,7 +41,7 @@
 
     <div v-show="!hidden">
       <div v-for="child in comment.children" :key="child.id" class="ion-padding-start">
-        <comment :comment="child" :is_child="true" @reply="reply" :post="$props.post"
+        <comment :comment="child" :is_child="true" @reply="reply" @more="more" :post="$props.post"
                  :parent_comment="$props.comment"></comment>
       </div>
     </div>
@@ -50,11 +55,12 @@ import {
   IonCol,
   IonIcon,
   IonImg,
-  IonButton
+  IonButton,
 } from '@ionic/vue';
 import {
   chevronDownOutline,
-  chevronBackOutline
+  chevronBackOutline,
+  ellipsisHorizontalOutline
 } from 'ionicons/icons';
 import {default as axios} from "axios";
 import api from "../base/api";
@@ -63,13 +69,13 @@ import api from "../base/api";
 export default {
   name: "Comment",
   mixins: [api],
-  emits: ['reply'],
+  emits: ['reply', 'more'],
   components: {
     IonRow,
     IonCol,
     IonIcon,
     IonImg,
-    IonButton
+    IonButton,
   },
   props: {
     comment: Object,
@@ -79,6 +85,7 @@ export default {
     return {
       chevronDownOutline,
       chevronBackOutline,
+      ellipsisHorizontalOutline,
       hidden: false,
     }
   },
@@ -107,7 +114,11 @@ export default {
     reply(parent) {
       if (parent.id) this.$emit('reply', parent)
       else this.$emit('reply', this.$props.comment)
-    }
+    },
+    more(parent) {
+      if (parent.id) this.$emit('more', parent)
+      else this.$emit('more', this.$props.comment)
+    },
   }
 }
 </script>
