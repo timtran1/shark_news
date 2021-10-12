@@ -1,21 +1,30 @@
 <template>
   <ion-page>
+    <ion-header v-if="uid">
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button color="medium" size="small" @click="more">
+            <ion-icon :icon="ellipsisHorizontalOutline"/>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
     <ion-content :fullscreen="true" class="ion-padding">
       <ion-refresher slot="fixed" @ionRefresh="fetch_posts">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <div v-if="uid" class="ion-padding-top">
+      <div v-if="uid">
 
-        <div v-if="user" class="user-container ion-justify-content-center ion-align-items-center ion-padding ion-margin-top">
+        <div v-if="user"
+             class="user-container ion-justify-content-center ion-align-items-center ion-padding">
           <ion-avatar class="ion-text-center ion-margin-top">
             <ion-img :src="host + user.image"/>
           </ion-avatar>
           <ion-text color="primary">
             <h5 class="ion-text-center">{{ user.name }}</h5>
           </ion-text>
-          <ion-button class="ion-text-center" color="danger" size="small" fill="outline" @click="logout">Log out
-          </ion-button>
 
         </div>
         <div class="bottom-divider"></div>
@@ -53,9 +62,17 @@ import {
   IonListHeader,
   IonText,
   IonRefresher,
-  IonRefresherContent
-  // IonLabel
+  IonRefresherContent,
+  IonIcon,
+  IonHeader,
+  IonButtons,
+  actionSheetController,
+  IonToolbar,
+  alertController
 } from '@ionic/vue';
+import {
+  ellipsisHorizontalOutline
+} from 'ionicons/icons';
 import AuthOptions from "../components/AuthOptions";
 import init_user from "../store/init_user";
 import api from "../base/api";
@@ -80,13 +97,18 @@ export default {
     IonText,
     PostSummary,
     IonRefresher,
-    IonRefresherContent
+    IonRefresherContent,
+    IonIcon,
+    IonHeader,
+    IonButtons,
+    IonToolbar
   },
   props: {
     user_id: Number
   },
   data() {
     return {
+      ellipsisHorizontalOutline,
       user: null
     }
   },
@@ -117,9 +139,76 @@ export default {
       this.$store.commit('set_uid', 0)
       this.$router.replace('/tabs/feed')
     },
+    async confirm_logout() {
+      const alert = await alertController
+          .create({
+            message: 'Are you sure you want to logout?',
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+              },
+              {
+                text: 'Yes',
+                handler: this.logout
+              },
+            ],
+          });
+      return alert.present();
+    },
+    async delete_account() {
+      await axios.get(`${this.host}/delete_user`, {headers: this.headers})
+
+      const token = await init_user()
+      this.$store.commit('set_token', token)
+      this.$store.commit('set_uid', 0)
+      this.$router.replace('/tabs/feed')
+    },
+    async confirm_delete_account() {
+      const alert = await alertController
+          .create({
+            header: 'Warning!',
+            message: 'Are you sure you want to delete your account? This action is irreversible.',
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+              },
+              {
+                text: 'Yes',
+                handler: this.delete_account
+              },
+            ],
+          });
+      return alert.present();
+    },
     open_post(id) {
       this.$router.push(`/post/view/${id}`)
     },
+    async more() {
+      const actionSheet = await actionSheetController
+          .create({
+            // header: 'Albums',
+            cssClass: 'my-custom-class',
+            buttons: [
+              {
+                text: 'Logout',
+                role: 'destructive',
+                handler: this.confirm_logout,
+              },
+              {
+                text: 'Delete account',
+                role: 'destructive',
+                handler: this.confirm_delete_account
+              },
+              {
+                text: 'Cancel',
+                role: 'cancel',
+              },
+            ],
+          });
+      await actionSheet.present();
+    }
   }
 }
 </script>

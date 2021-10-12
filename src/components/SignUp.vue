@@ -76,12 +76,12 @@ export default {
   methods: {
     async submit() {
       if (this.password !== this.confirm_password) {
-        let alert = await alertController.create({
+        const alert = await alertController.create({
           header: 'Passwords do not match',
           message: 'Please re-confirm your password',
           buttons: ['OK']
         })
-        await alert.present()
+        return alert.present()
       }
 
       const token = this.$store.state.token
@@ -95,6 +95,14 @@ export default {
         },
         headers
       })
+
+      if (!res.data.uid) {
+        const alert = await alertController.create({
+          message: res.data.err,
+          buttons: ['OK']
+        })
+        return alert.present()
+      }
 
       this.$store.commit('set_uid', res.data.uid)
       this.$router.back()
