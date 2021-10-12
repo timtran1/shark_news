@@ -3,6 +3,13 @@ import App from './App.vue'
 import router from './router';
 import init_store from './store/index'
 import {IonicVue} from '@ionic/vue';
+import mixpanel from 'mixpanel-browser';
+
+mixpanel.init('97b5d600b2bbd423fefdec1bba007339', {
+    debug: true,
+    ignore_dnt: true
+});
+mixpanel.track('View');
 // import {Device} from '@capacitor/device';
 
 /* Core CSS required for Ionic components to work properly */

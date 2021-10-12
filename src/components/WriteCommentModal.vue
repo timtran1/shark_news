@@ -18,7 +18,8 @@
       <div class="ion-padding-start ion-padding-end ion-padding-top">
         <ion-row>
           <ion-col size="12">
-            <ion-textarea ref="comment" v-model="comment" required autofocus rows="10" placeholder="Type your comment here..."/>
+            <ion-textarea ref="comment" v-model="comment" required autofocus rows="10"
+                          placeholder="Type your comment here..."/>
           </ion-col>
         </ion-row>
       </div>
@@ -42,6 +43,7 @@ import {
 } from '@ionic/vue';
 import api from "../base/api";
 import {default as axios} from "axios";
+import mixpanel from "mixpanel-browser";
 
 
 export default {
@@ -90,6 +92,10 @@ export default {
       const res = await axios.get(`${this.host}/post/comment`, {
         params,
         headers: this.headers
+      })
+
+      mixpanel.track('Comment', {
+        unique_id: this.$store.state.uid
       })
 
       const comment = res.data.comment

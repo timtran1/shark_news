@@ -51,6 +51,7 @@ import {
 } from '@ionic/vue';
 import PostSummary from "../components/PostSummary";
 import api from "../base/api";
+import mixpanel from "mixpanel-browser";
 
 const axios = require("axios").default
 
@@ -87,6 +88,10 @@ export default {
         headers: this.headers
       })
       this.posts = res.data.posts
+
+      mixpanel.track('Feed request', {
+        unique_id: this.$store.state.uid
+      })
 
       if (event) event.target.complete()
       return true

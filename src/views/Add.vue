@@ -42,11 +42,12 @@ import {
   IonInput,
   IonButton,
   IonTextarea,
-    loadingController
+  loadingController
 } from '@ionic/vue';
 import api from "../base/api";
 import AuthOptions from "../components/AuthOptions";
 import {default as axios} from "axios";
+import mixpanel from "mixpanel-browser";
 
 export default {
   name: 'Add',
@@ -72,13 +73,13 @@ export default {
   },
   methods: {
     async send() {
-       const loading = await loadingController
-        .create({
-          cssClass: 'my-custom-class',
-          message: 'Sending...',
-          duration: 2000,
-        });
-       await loading.present()
+      const loading = await loadingController
+          .create({
+            cssClass: 'my-custom-class',
+            message: 'Sending...',
+            duration: 2000,
+          });
+      await loading.present()
 
       let params = {title: this.title}
 
@@ -92,6 +93,10 @@ export default {
 
       const post = res.data.post
       console.log({post})
+
+      mixpanel.track('Post added', {
+        unique_id: this.$store.state.uid
+      })
 
       this.$router.replace('/tabs/feed')
 
