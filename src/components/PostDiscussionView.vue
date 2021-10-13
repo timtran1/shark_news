@@ -38,12 +38,6 @@
 
       <div class="ion-padding bottom-pad"></div>
 
-      <ion-card class="add-comment-hover" @click="write_comment">
-        <ion-card-content>
-          Add a comment...
-        </ion-card-content>
-      </ion-card>
-
       <ion-modal :is-open="writing_comment">
         <write-comment-modal @dismiss="toggle_write_comment" @send="comment_sent"
                              :post="post" :parent_comment="writing_comment_parent"/>
@@ -52,6 +46,14 @@
       <ion-modal :is-open="writing_report">
         <content-report-modal @dismiss="toggle_write_report" @send="report_sent" :reasons="reasons"/>
       </ion-modal>
+
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-card @click="write_comment">
+          <ion-card-content>
+            Add a comment...
+          </ion-card-content>
+        </ion-card>
+      </ion-fab>
 
     </ion-content>
   </ion-page>
@@ -72,7 +74,9 @@ import {
   IonModal,
   IonRefresher,
   IonRefresherContent,
-  IonIcon
+  IonIcon,
+  IonFab,
+  // IonFabButton
 } from '@ionic/vue';
 import {
   shareOutline,
@@ -106,6 +110,7 @@ export default {
     IonImg,
     IonCardContent,
     IonCard,
+    IonFab,
     IonModal,
     Comment,
     PostSummary,
@@ -221,15 +226,15 @@ span {
   margin-right: 5px;
 }
 
-.add-comment-hover {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  color: #8c8c8c;
-  /*width: 100%;*/
-}
+/*.add-comment-hover {*/
+/*  position: fixed;*/
+/*  bottom: 0;*/
+/*  right: 0;*/
+/*  color: #8c8c8c;*/
+/*  !*width: 100%;*!*/
+/*}*/
 
 .bottom-pad {
-  padding-bottom: 5rem;
+  padding-bottom: 6rem;
 }
 </style>

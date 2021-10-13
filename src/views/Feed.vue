@@ -33,6 +33,18 @@
         <div class="bottom-divider"></div>
       </div>
 
+      <ion-infinite-scroll
+          @ionInfinite="fetch_feed"
+          threshold="100px"
+          id="infinite-scroll"
+          :disabled="$store.state.feed_end_reached"
+      >
+        <ion-infinite-scroll-content
+            loading-spinner="dots"
+            loading-text="Loading more posts...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
     </ion-content>
   </ion-page>
 </template>
@@ -47,7 +59,9 @@ import {
   IonRefresher,
   IonRefresherContent,
   IonHeader,
-  IonToolbar
+  IonToolbar,
+  IonInfiniteScrollContent,
+  IonInfiniteScroll
 } from '@ionic/vue';
 import PostSummary from "../components/PostSummary";
 import api from "../base/api";
@@ -68,7 +82,9 @@ export default {
     IonRefresher,
     IonRefresherContent,
     IonHeader,
-    IonToolbar
+    IonToolbar,
+    IonInfiniteScrollContent,
+    IonInfiniteScroll
   },
   data() {
     return {
@@ -85,9 +101,12 @@ export default {
 
     async fetch_feed(event = null) {
       let res = await axios.get(`${this.host}/feed`, {
-        headers: this.headers
+        headers: this.headers,
+        params: {offset: this.$store.state.feed_offset}
       })
-      this.posts = res.data.posts
+      this.posts = this.posts.concat(res.data.posts)
+      this.$store.state.feed_offset += res.data.posts.length
+      if (res.data.posts.length === 0) this.$store.state.feed_end_reached = true
 
       mixpanel.track('Feed request', {
         unique_id: this.$store.state.uid

@@ -20,6 +20,8 @@ export default async function init_store() {
                 reporting_post: null,
                 reporting: '',
                 writing_report: false,
+                feed_offset: 0,
+                feed_end_reached: false,
             }
         },
         mutations: {

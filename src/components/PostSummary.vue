@@ -93,7 +93,7 @@ export default {
       return Share.share({
         title: `${post.title} - SharkNews`,
         text: `Shared from SharkNews`,
-        url: `${this.host}/post/discussion/${post.id}`,
+        url: `https://sharknews.live/post/discussion/${post.id}`,
         dialogTitle: 'Share post',
       });
     }

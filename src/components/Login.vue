@@ -39,7 +39,7 @@ import {
   IonBackButton,
   IonButtons,
   IonTitle,
-  toastController
+  toastController, alertController
 } from '@ionic/vue';
 import api from "../base/api";
 import mixpanel from "mixpanel-browser";
@@ -73,6 +73,14 @@ export default {
           password: this.password
         }
       })
+
+      if (!res.data.uid) {
+        const alert = await alertController.create({
+          message: res.data.err,
+          buttons: ['OK']
+        })
+        return alert.present()
+      }
 
       mixpanel.track('Login', {
         unique_id: res.data.uid
