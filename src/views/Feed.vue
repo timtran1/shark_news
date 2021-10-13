@@ -7,32 +7,12 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-refresher slot="fixed" @ionRefresh="fetch_feed">
+      <ion-refresher slot="fixed" @ionRefresh="fetch_feed(null, true)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
       <div class="posts ion-justify-content-center ion-align-items-center">
-        <div v-for="post in posts" :key="post.id" @click="open_post(post.id)" class="ion-padding post-container">
-          <h4>{{ post.title }}</h4>
-          <ion-img class="post-img" v-if="post.image" :src="post.image"/>
-          <p>{{ post.subtext }}</p>
-
-          <ion-row class="user-name-row" v-if="post.user">
-            <ion-col size="4" class="ion-justify-content-center" color="light">
-          <span>
-            {{ post.user.name }}
-          </span>
-            </ion-col>
-            <ion-col size="4">
-            </ion-col>
-            <ion-col size="4">
-            </ion-col>
-          </ion-row>
-
-          <post-summary :post="post"/>
-
-          <div class="bottom-divider"></div>
-        </div>
+        <post-display v-for="post in posts" :key="post.id" :post="post" :show_username="true"/>
       </div>
 
       <ion-infinite-scroll
@@ -55,9 +35,6 @@
 import {
   IonPage,
   IonContent,
-  IonImg,
-  IonRow,
-  IonCol,
   IonRefresher,
   IonRefresherContent,
   IonHeader,
@@ -65,11 +42,12 @@ import {
   IonInfiniteScrollContent,
   IonInfiniteScroll
 } from '@ionic/vue';
-import PostSummary from "../components/PostSummary";
 import api from "../base/api";
 import mixpanel from "mixpanel-browser";
+import PostDisplay from "../components/PostDisplay";
 
 const axios = require("axios").default
+
 
 export default {
   name: 'Feed',
@@ -77,16 +55,13 @@ export default {
   components: {
     IonContent,
     IonPage,
-    IonImg,
-    IonRow,
-    IonCol,
-    PostSummary,
     IonRefresher,
     IonRefresherContent,
     IonHeader,
     IonToolbar,
     IonInfiniteScrollContent,
-    IonInfiniteScroll
+    IonInfiniteScroll,
+    PostDisplay
   },
   data() {
     return {
@@ -97,16 +72,14 @@ export default {
     this.fetch_feed()
   },
   methods: {
-    open_post(id) {
-      this.$router.push(`/post/view/${id}`)
-    },
-
-    async fetch_feed(event = null) {
+    async fetch_feed(event = null, refresh = false) {
       let res = await axios.get(`${this.host}/feed`, {
         headers: this.headers,
         params: {offset: this.$store.state.feed_offset}
       })
-      this.posts = this.posts.concat(res.data.posts)
+
+      if (refresh)this.posts = res.data.posts
+      else this.posts = this.posts.concat(res.data.posts)
       this.$store.state.feed_offset += res.data.posts.length
       if (res.data.posts.length === 0) this.$store.state.feed_end_reached = true
 
@@ -122,43 +95,6 @@ export default {
 </script>
 
 <style scoped>
-.post-img {
-  border-radius: 10px !important;
-  overflow: hidden;
-}
-
-.bottom-divider {
-  border-bottom: 1px solid lightgrey;
-  padding-bottom: 16px;
-}
-
-.post-container {
-  padding-bottom: 0;
-  max-width: 700px;
-}
-
-ion-col {
-  padding: 0 !important;
-}
-
-ion-button {
-  margin: 0 !important;
-}
-
-p {
-  margin-bottom: 0;
-}
-
-span {
-  color: #8c8c8c;
-  font-size: 0.8rem;
-}
-
-.user-name-row {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
 .posts {
   display: flex;
   flex-direction: column;

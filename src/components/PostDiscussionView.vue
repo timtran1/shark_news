@@ -22,15 +22,8 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <div v-if="post" class="post-container ion-padding" @click="open_post">
-
-        <h4>{{ post.title }}</h4>
-        <ion-img class="post-img" v-if="post.image" :src="post.image"/>
-        <p>{{ post.subtext }}</p>
-
-        <post-summary :post="post"/>
-
-        <div class="bottom-divider"></div>
+      <div class="posts ion-justify-content-center ion-align-items-center">
+        <post-display :post="post" :show_username="false"/>
       </div>
 
       <comment v-for="comment in post.comments" :key="comment.id" :comment="comment" @reply="write_reply"
@@ -76,7 +69,6 @@ import {
   IonRefresherContent,
   IonIcon,
   IonFab,
-  // IonFabButton
 } from '@ionic/vue';
 import {
   shareOutline,
@@ -87,14 +79,14 @@ import {
   ellipsisHorizontalOutline
 } from 'ionicons/icons';
 import Comment from "./Comment";
-import PostSummary from "../components/PostSummary";
 import WriteCommentModal from "./WriteCommentModal";
 import ContentReportModal from "./ContentReportModal";
 import api from "../base/api";
 import content_report from "../base/content_report";
 import mixpanel from "mixpanel-browser";
-
+import PostDisplay from "./PostDisplay";
 const axios = require("axios").default
+
 
 export default {
   name: "PostDiscussionView",
@@ -113,12 +105,12 @@ export default {
     IonFab,
     IonModal,
     Comment,
-    PostSummary,
     WriteCommentModal,
     IonRefresher,
     IonRefresherContent,
     ContentReportModal,
-    IonIcon
+    IonIcon,
+    PostDisplay
   },
   data() {
     return {
@@ -138,10 +130,6 @@ export default {
     this.fetch_post()
   },
   methods: {
-    open_post() {
-      const post_id = this.$route.params.id
-      this.$router.push(`/post/view/${post_id}`)
-    },
     async fetch_post(event = null) {
       const post_id = this.$route.params.id
       const res = await axios.get(`${this.host}/post/discussion/${post_id}`, {headers: this.headers})
@@ -200,6 +188,8 @@ export default {
 
 .post-container {
   padding-bottom: 0;
+  max-width: 700px;
+  cursor: pointer;
 }
 
 ion-col {
@@ -236,5 +226,10 @@ span {
 
 .bottom-pad {
   padding-bottom: 6rem;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
 }
 </style>

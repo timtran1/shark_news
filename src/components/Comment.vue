@@ -153,4 +153,8 @@ span {
   height: 20px;
   margin-right: 3px;
 }
+
+.comment-wrapper {
+  max-width: 700px;
+}
 </style>

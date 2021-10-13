@@ -10,7 +10,9 @@
     </ion-header>
 
     <ion-content :fullscreen="true" class="">
-      <iframe v-if="post" :src="post.url" frameborder="0"></iframe>
+      <ion-progress-bar v-if="loading" type="indeterminate"></ion-progress-bar>
+
+      <iframe v-if="post" :src="post.url" frameborder="0" @load="loaded"></iframe>
 
       <p v-if="!post">Loading...</p>
 
@@ -31,15 +33,18 @@ import {
   IonBackButton,
   IonButtons,
   IonTitle,
+  IonProgressBar
 } from '@ionic/vue';
 import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} from 'ionicons/icons';
 import PostSummary from "../components/PostSummary";
 import mixpanel from "mixpanel-browser";
+import api from "../base/api";
 
 const axios = require("axios").default
 
 export default {
   name: "PostWebView",
+  mixins: [api],
   components: {
     IonContent,
     IonPage,
@@ -49,7 +54,8 @@ export default {
     IonBackButton,
     IonButtons,
     IonTitle,
-    PostSummary
+    PostSummary,
+    IonProgressBar
   },
   data() {
     return {
@@ -57,32 +63,35 @@ export default {
       chatboxEllipsesOutline,
       fishOutline,
       personCircleOutline,
-      post: {}
+      post: {},
+      loading: true
     }
   },
   created() {
-    const post_id = this.$route.params.id
-    let host = ''
-
-    if (process.env.NODE_ENV === 'development') {
-      host = 'http://localhost'
-    }
-
-    axios.get(`${host}/post/summary/${post_id}`)
-        .then(res => {
-          this.post = res.data.post
-
-          mixpanel.track('Post view', {
-            unique_id: this.$store.state.uid
-          })
-        })
+    this.fetch_post()
   },
+  methods: {
+    async fetch_post() {
+      const post_id = this.$route.params.id
+      const res = await axios.get(`${this.host}/post/summary/${post_id}`)
+      this.post = res.data.post
+
+      mixpanel.track('Post view', {
+        unique_id: this.$store.state.uid
+      })
+    },
+    async loaded() {
+      console.log('loaded')
+      await this.sleep(3000)
+      this.loading = false
+    }
+  }
 }
 </script>
 
 <style scoped>
 iframe {
-  height: 94%;
+  height: 93%;
   width: 100%;
 }
 
