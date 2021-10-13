@@ -11,26 +11,28 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <div v-for="post in posts" :key="post.id" @click="open_post(post.id)" class="ion-padding post-container">
-        <h4>{{ post.title }}</h4>
-        <ion-img class="post-img" v-if="post.image" :src="post.image"/>
-        <p>{{ post.subtext }}</p>
+      <div class="posts ion-justify-content-center ion-align-items-center">
+        <div v-for="post in posts" :key="post.id" @click="open_post(post.id)" class="ion-padding post-container">
+          <h4>{{ post.title }}</h4>
+          <ion-img class="post-img" v-if="post.image" :src="post.image"/>
+          <p>{{ post.subtext }}</p>
 
-        <ion-row class="user-name-row" v-if="post.user">
-          <ion-col size="4" class="ion-justify-content-center" color="light">
+          <ion-row class="user-name-row" v-if="post.user">
+            <ion-col size="4" class="ion-justify-content-center" color="light">
           <span>
             {{ post.user.name }}
           </span>
-          </ion-col>
-          <ion-col size="4">
-          </ion-col>
-          <ion-col size="4">
-          </ion-col>
-        </ion-row>
+            </ion-col>
+            <ion-col size="4">
+            </ion-col>
+            <ion-col size="4">
+            </ion-col>
+          </ion-row>
 
-        <post-summary :post="post"/>
+          <post-summary :post="post"/>
 
-        <div class="bottom-divider"></div>
+          <div class="bottom-divider"></div>
+        </div>
       </div>
 
       <ion-infinite-scroll
@@ -132,6 +134,7 @@ export default {
 
 .post-container {
   padding-bottom: 0;
+  max-width: 700px;
 }
 
 ion-col {
@@ -154,5 +157,10 @@ span {
 .user-name-row {
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
 }
 </style>
