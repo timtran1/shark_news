@@ -7,7 +7,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-refresher slot="fixed" @ionRefresh="fetch_feed(null, true)">
+      <ion-refresher slot="fixed" @ionRefresh="fetch_feed($event, true)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
@@ -73,6 +73,7 @@ export default {
   },
   methods: {
     async fetch_feed(event = null, refresh = false) {
+      if (refresh) this.$store.state.feed_offset = 0
       let res = await axios.get(`${this.host}/feed`, {
         headers: this.headers,
         params: {offset: this.$store.state.feed_offset}
