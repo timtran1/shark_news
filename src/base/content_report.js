@@ -1,4 +1,6 @@
-import {actionSheetController, alertController} from '@ionic/vue';
+import {actionSheetController, alertController, loadingController} from '@ionic/vue';
+const axios = require("axios").default
+
 
 export default {
     name: 'ContentReportMixin',
@@ -24,6 +26,43 @@ export default {
         }
     },
     methods: {
+        async block(user) {
+            const loading = await loadingController
+                .create({
+                    message: 'Blocking...',
+                    duration: 2000
+                });
+            await loading.present();
+            await axios.get(`${this.host}/block?user_id=${user.id}`,{
+                headers: this.headers
+            })
+            loading.dismiss()
+        },
+        async confirm_block(user) {
+            if (!this.uid) {
+                this.$router.push('/auth')
+                return
+            }
+
+            const alert = await alertController
+                .create({
+                    header: `Block ${user.name}?`,
+                    message: 'They will no longer be able to see or interact with your posts and comments. You will also no longer see their posts on your feed.',
+                    buttons: [
+                        {
+                            text: 'Cancel',
+                            role: 'cancel',
+                        },
+                        {
+                            text: 'Block',
+                            handler: () => {
+                                this.block(user)
+                            }
+                        },
+                    ],
+                });
+            return alert.present();
+        },
         toggle_write_report() {
             this.$store.state.writing_report = !this.$store.state.writing_report
         },
@@ -38,7 +77,6 @@ export default {
             this.toggle_write_report()
             const alert = await alertController
                 .create({
-                    cssClass: 'my-custom-class',
                     header: 'Report sent!',
                     message: 'Thank you for helping us keep SharkNews clean for you and your fellow sharks. We will be looking into your report, and let you know by email if actions are taken.',
                     buttons: ['OK'],
@@ -50,8 +88,6 @@ export default {
             this.$store.state.reporting = 'comment'
             const actionSheet = await actionSheetController
                 .create({
-                    // header: 'Albums',
-                    cssClass: 'my-custom-class',
                     buttons: [
                         {
                             text: 'Report',
@@ -62,7 +98,7 @@ export default {
                             text: 'Block user',
                             role: 'destructive',
                             handler: () => {
-                                console.log('Share clicked')
+                                this.confirm_block(comment.user)
                             },
                         },
                         {
@@ -82,8 +118,6 @@ export default {
             this.$store.state.reporting = 'post'
             const actionSheet = await actionSheetController
                 .create({
-                    // header: 'Albums',
-                    cssClass: 'my-custom-class',
                     buttons: [
                         {
                             text: 'Report',
@@ -94,7 +128,7 @@ export default {
                             text: 'Block user',
                             role: 'destructive',
                             handler: () => {
-                                console.log('Share clicked')
+                                this.confirm_block(post.user)
                             },
                         },
                         {

@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-header collapse="condense" class="ion-margin-bottom">
+    <ion-header collapse="condense">
       <ion-toolbar>
         <!--        <ion-title>New post</ion-title>-->
       </ion-toolbar>
@@ -12,8 +12,28 @@
       </ion-refresher>
 
       <div class="posts ion-justify-content-center ion-align-items-center">
-        <post-display v-for="post in posts" :key="post.id" :post="post" :show_username="true"/>
+        <div v-for="post in posts" :key="post.id">
+          <ion-row class="user-name-row ion-padding-start ion-padding-end ion-padding-top">
+            <ion-col size="6" class="ion-justify-content-center user-col" color="light">
+              <span>
+                <small>{{ post.user.name }}</small>
+              </span>
+            </ion-col>
+            <ion-col size="5">
+            </ion-col>
+            <ion-col size="1" class="ion-text-right" @click.stop="more_actions_post(post)">
+              <span class="ion-text-right">
+                <ion-icon :icon="ellipsisHorizontalOutline"/>
+              </span>
+            </ion-col>
+          </ion-row>
+          <post-display :post="post"/>
+        </div>
       </div>
+
+      <ion-modal :is-open="writing_report">
+        <content-report-modal @dismiss="toggle_write_report" @send="report_sent" :reasons="reasons"/>
+      </ion-modal>
 
       <ion-infinite-scroll
           @ionInfinite="fetch_feed"
@@ -40,18 +60,27 @@ import {
   IonHeader,
   IonToolbar,
   IonInfiniteScrollContent,
-  IonInfiniteScroll
+  IonInfiniteScroll,
+  IonRow,
+  IonCol,
+  IonIcon,
+  IonModal
 } from '@ionic/vue';
 import api from "../base/api";
 import mixpanel from "mixpanel-browser";
 import PostDisplay from "../components/PostDisplay";
+import content_report from "../base/content_report";
+import ContentReportModal from "../components/ContentReportModal";
 
 const axios = require("axios").default
+import {
+  ellipsisHorizontalOutline
+} from 'ionicons/icons';
 
 
 export default {
   name: 'Feed',
-  mixins: [api],
+  mixins: [api, content_report],
   components: {
     IonContent,
     IonPage,
@@ -61,10 +90,16 @@ export default {
     IonToolbar,
     IonInfiniteScrollContent,
     IonInfiniteScroll,
-    PostDisplay
+    PostDisplay,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonModal,
+    ContentReportModal
   },
   data() {
     return {
+      ellipsisHorizontalOutline,
       posts: []
     }
   },
@@ -79,7 +114,7 @@ export default {
         params: {offset: this.$store.state.feed_offset}
       })
 
-      if (refresh)this.posts = res.data.posts
+      if (refresh) this.posts = res.data.posts
       else this.posts = this.posts.concat(res.data.posts)
       this.$store.state.feed_offset += res.data.posts.length
       if (res.data.posts.length === 0) this.$store.state.feed_end_reached = true
@@ -99,5 +134,13 @@ export default {
 .posts {
   display: flex;
   flex-direction: column;
+}
+
+span {
+  color: grey;
+}
+
+.user-col {
+  padding-left: 0 !important;
 }
 </style>

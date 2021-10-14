@@ -10,7 +10,7 @@
             <ion-img :src="host + post.user.image" class="user-avatar"/>
             <span class="user-name">{{ post.user.name }}</span>
           </ion-button>
-          <ion-button color="medium" size="small" @click="more_actions_post(post)">
+          <ion-button color="medium" size="small" @click.stop="more_actions_post(post)">
             <ion-icon :icon="ellipsisHorizontalOutline"/>
           </ion-button>
         </ion-buttons>
@@ -175,23 +175,6 @@ export default {
 </script>
 
 <style scoped>
-.post-img {
-  border-radius: 10px !important;
-  overflow: hidden;
-}
-
-.bottom-divider {
-  border-bottom: 1px solid lightgrey;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-}
-
-.post-container {
-  padding-bottom: 0;
-  max-width: 700px;
-  cursor: pointer;
-}
-
 ion-col {
   padding: 0 !important;
 }

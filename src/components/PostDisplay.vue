@@ -1,50 +1,43 @@
 <template>
-  <div @click="open_post" class="ion-padding post-container">
+  <div @click="open_post" class="ion-padding-start ion-padding-end post-container">
     <h4>{{ $props.post.title }}</h4>
     <ion-img class="post-img" v-if="$props.post.image" :src="$props.post.image"/>
     <p>{{ $props.post.subtext }}</p>
 
-    <ion-row class="user-name-row" v-if="$props.show_username && $props.post.user">
-      <ion-col size="4" class="ion-justify-content-center" color="light">
-          <span>
-            {{ $props.post.user.name }}
-          </span>
-      </ion-col>
-      <ion-col size="4">
-      </ion-col>
-      <ion-col size="4">
-      </ion-col>
-    </ion-row>
-
     <post-summary :post="$props.post"/>
 
-    <div class="bottom-divider"></div>
+    <div class="bottom-divider"/>
   </div>
 </template>
 
 <script>
 import {
-  IonRow,
-  IonCol,
   IonImg
 } from '@ionic/vue';
 import api from "../base/api";
 import PostSummary from "./PostSummary";
 import {Browser} from '@capacitor/browser';
+import {
+  ellipsisHorizontalOutline
+} from 'ionicons/icons';
+
 
 
 export default {
   name: "PostDisplay",
   mixins: [api],
   components: {
-    IonRow,
-    IonCol,
     IonImg,
     PostSummary
   },
   props: {
     post: Object,
     show_username: Boolean
+  },
+  data() {
+    return {
+      ellipsisHorizontalOutline
+    }
   },
   methods: {
     open_post() {
@@ -56,7 +49,9 @@ export default {
 </script>
 
 <style scoped>
-
+h4 {
+  margin-top: 0 !important;
+}
 
 ion-col {
   padding: 0 !important;
@@ -73,11 +68,6 @@ p {
 span {
   color: #8c8c8c;
   font-size: 0.8rem;
-}
-
-.user-name-row {
-  padding-top: 5px;
-  padding-bottom: 5px;
 }
 
 .post-img {
