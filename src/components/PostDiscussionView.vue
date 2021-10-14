@@ -22,8 +22,8 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <div class="posts ion-justify-content-center ion-align-items-center">
-        <post-display :post="post" :show_username="false"/>
+      <div class="posts ion-justify-content-center ion-align-items-center ion-padding-top">
+        <post-display :post="post"/>
       </div>
 
       <comment v-for="comment in post.comments" :key="comment.id" :comment="comment" @reply="write_reply"

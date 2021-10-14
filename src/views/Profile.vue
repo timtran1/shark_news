@@ -29,7 +29,7 @@
         </div>
         <div class="bottom-divider"></div>
         <ion-list v-if="user">
-          <ion-list-header>Posts</ion-list-header>
+          <ion-list-header class="ion-margin-bottom">Posts</ion-list-header>
 
           <ion-item v-for="post in user.posts" :key="post.id" @click="open_post(post.id)">
 
