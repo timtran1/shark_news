@@ -12,7 +12,8 @@
     "build-ios": "LANG=en_US.UTF-8 ionic capacitor sync ios",
     "run-ios": "LANG=en_US.UTF-8 ionic capacitor run ios --target=28D45FE3-BB51-4A31-A344-AB51603A18B3",
     "serve-ios": "LANG=en_US.UTF-8 ionic capacitor run ios --target=28D45FE3-BB51-4A31-A344-AB51603A18B3 --livereload --external",
-    "open-ios": "ionic capacitor open ios"
+    "open-ios": "ionic capacitor open ios",
+    "generate-icons-ios": "cordova-res ios --skip-config --copy"
   },
   "dependencies": {
     "@capacitor/app": "1.0.3",
@@ -44,6 +45,7 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0-0",
     "@vue/test-utils": "^2.0.0-0",
+    "cordova-res": "^0.15.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
     "vue-jest": "^5.0.0-0"
