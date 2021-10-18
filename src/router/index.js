@@ -51,6 +51,14 @@ const routes = [
     {
         path: '/post/discussion/:id',
         component: () => import('@/components/PostDiscussionView.vue')
+    },
+    {
+        path: '/privacy-policy',
+        component: () => import('@/info/PrivacyPolicy.vue')
+    },
+    {
+        path: '/terms-and-conditions',
+        component: () => import('@/info/Terms.vue')
     }
 ]
 

@@ -2,6 +2,11 @@
   <ion-page>
     <ion-header v-if="uid">
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button color="medium" size="small" @click="info">
+            <ion-icon :icon="informationCircleOutline"/>
+          </ion-button>
+        </ion-buttons>
         <ion-buttons slot="end">
           <ion-button color="medium" size="small" @click="more">
             <ion-icon :icon="ellipsisHorizontalOutline"/>
@@ -71,7 +76,8 @@ import {
   alertController
 } from '@ionic/vue';
 import {
-  ellipsisHorizontalOutline
+  ellipsisHorizontalOutline,
+  informationCircleOutline
 } from 'ionicons/icons';
 import AuthOptions from "../components/AuthOptions";
 import init_user from "../store/init_user";
@@ -109,6 +115,7 @@ export default {
   data() {
     return {
       ellipsisHorizontalOutline,
+      informationCircleOutline,
       user: null
     }
   },
@@ -185,11 +192,35 @@ export default {
     open_post(id) {
       this.$router.push(`/post/view/${id}`)
     },
+    async info() {
+      const actionSheet = await actionSheetController
+          .create({
+            buttons: [
+              {
+                text: 'Contact us',
+                handler: async () => {
+                  const alert = await alertController.create({
+                    message: 'Please send us an email at <b>contact@sharknews.live</b>, we would love to hear from you!',
+                    buttons: ['OK'],
+                  });
+                  return alert.present();
+                }
+              },
+              {
+                text: 'Privacy policy',
+                handler: () => this.$router.push('/privacy-policy')
+              },
+              {
+                text: 'Terms and conditions',
+                handler: () => this.$router.push('/terms-and-conditions')
+              }
+            ],
+          });
+      await actionSheet.present();
+    },
     async more() {
       const actionSheet = await actionSheetController
           .create({
-            // header: 'Albums',
-            cssClass: 'my-custom-class',
             buttons: [
               {
                 text: 'Logout',
