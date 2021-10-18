@@ -1,13 +1,13 @@
 <template>
   <ion-page>
-    <ion-header v-if="uid">
+    <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-button color="medium" size="small" @click="info">
             <ion-icon :icon="informationCircleOutline"/>
           </ion-button>
         </ion-buttons>
-        <ion-buttons slot="end">
+        <ion-buttons slot="end" v-if="uid">
           <ion-button color="medium" size="small" @click="more">
             <ion-icon :icon="ellipsisHorizontalOutline"/>
           </ion-button>
