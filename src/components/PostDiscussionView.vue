@@ -136,7 +136,7 @@ export default {
       this.post = res.data.post
 
       mixpanel.track('Post discussion view', {
-        unique_id: this.$store.state.uid
+        distinct_id: this.$store.state.uid
       })
 
       if (event) event.target.complete()

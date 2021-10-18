@@ -120,7 +120,7 @@ export default {
       if (res.data.posts.length === 0) this.$store.state.feed_end_reached = true
 
       mixpanel.track('Feed request', {
-        unique_id: this.$store.state.uid
+        distinct_id: this.$store.state.uid
       })
 
       if (event) event.target.complete()

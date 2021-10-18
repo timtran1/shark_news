@@ -77,7 +77,7 @@ export default {
       this.post = res.data.post
 
       mixpanel.track('Post view', {
-        unique_id: this.$store.state.uid
+        distinct_id: this.$store.state.uid
       })
     },
     async loaded() {

@@ -95,7 +95,7 @@ export default {
       console.log({post})
 
       mixpanel.track('Post added', {
-        unique_id: this.$store.state.uid
+        distinct_id: this.$store.state.uid
       })
 
       this.$router.replace('/tabs/feed')

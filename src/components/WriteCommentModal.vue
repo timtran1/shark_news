@@ -95,7 +95,7 @@ export default {
       })
 
       mixpanel.track('Comment', {
-        unique_id: this.$store.state.uid
+        distinct_id: this.$store.state.uid
       })
 
       const comment = res.data.comment
