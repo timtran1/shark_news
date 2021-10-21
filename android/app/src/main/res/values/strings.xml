@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SharkNews</string>
+    <string name="title_activity_main">SharkNews</string>
+    <string name="package_name">live.sharknews.sharknews</string>
+    <string name="custom_url_scheme">live.sharknews.sharknews</string>
+</resources>

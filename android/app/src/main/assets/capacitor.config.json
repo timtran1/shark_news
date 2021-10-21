@@ -1,0 +1,6 @@
+{
+	"appId": "live.sharknews.sharknews",
+	"appName": "SharkNews",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}
