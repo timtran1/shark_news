@@ -21,7 +21,7 @@
     "sync-android": "LANG=en_US.UTF-8 ionic capacitor sync android",
     "generate-icons-android": "cordova-res android --skip-config --copy",
 
-    "generate-icons": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy",
+    "generate-icons": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy && sh copy_android_foreground_icons.sh",
     "sync-all": "vue-cli-service build && echo SYNCING IOS BUILD && LANG=en_US.UTF-8 ionic capacitor sync ios --no-build && echo SYNCING ANDROID BUILD && LANG=en_US.UTF-8 ionic capacitor sync android --no-build && echo UPLOADING TO S3 && aws s3 sync dist s3://sharknews.live --delete"
   },
   "dependencies": {
