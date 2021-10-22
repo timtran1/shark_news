@@ -39,7 +39,8 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  loadingController
+  loadingController,
+  alertController
 } from '@ionic/vue';
 import api from "../base/api";
 import {default as axios} from "axios";
@@ -85,22 +86,33 @@ export default {
         post_id: this.$props.post.id
       }
 
-      if (this.$props.parent_comment) {
-        params.parent_comment_id = this.$props.parent_comment.id
+      try {
+        if (this.$props.parent_comment) {
+          params.parent_comment_id = this.$props.parent_comment.id
+        }
+
+        const res = await axios.get(`${this.host}/post/comment`, {
+          params,
+          headers: this.headers
+        })
+
+        mixpanel.track('Comment', {
+          distinct_id: this.$store.state.uid
+        })
+
+        const comment = res.data.comment
+        loading.dismiss()
+        this.$emit('send', comment)
+      } catch (e) {
+        console.error(e)
+        loading.dismiss()
+        const alert = await alertController
+            .create({
+              message: 'An error occured.',
+              buttons: ['OK'],
+            });
+        return alert.present();
       }
-
-      const res = await axios.get(`${this.host}/post/comment`, {
-        params,
-        headers: this.headers
-      })
-
-      mixpanel.track('Comment', {
-        distinct_id: this.$store.state.uid
-      })
-
-      const comment = res.data.comment
-      loading.dismiss()
-      this.$emit('send', comment)
 
     },
     dismiss() {

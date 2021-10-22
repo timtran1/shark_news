@@ -42,7 +42,7 @@ import {
   IonInput,
   IonButton,
   IonTextarea,
-  loadingController
+  loadingController, alertController
 } from '@ionic/vue';
 import api from "../base/api";
 import AuthOptions from "../components/AuthOptions";
@@ -75,31 +75,41 @@ export default {
     async send() {
       const loading = await loadingController
           .create({
-            cssClass: 'my-custom-class',
             message: 'Sending...',
             duration: 2000,
           });
       await loading.present()
 
       let params = {title: this.title}
-
       if (this.url) params.url = this.url
       if (this.subtext) params.subtext = this.subtext
 
-      const res = await axios.get(`${this.host}/post/new`, {
-        params,
-        headers: this.headers
-      })
+      try {
+        await axios.get(`${this.host}/post/new`, {
+          params,
+          headers: this.headers
+        })
 
-      const post = res.data.post
-      console.log({post})
+        mixpanel.track('Post added', {
+          distinct_id: this.$store.state.uid
+        })
 
-      mixpanel.track('Post added', {
-        distinct_id: this.$store.state.uid
-      })
-
-      this.$router.replace('/tabs/feed')
-
+        const alert = await alertController
+            .create({
+              message: '<b>Posted!</b>',
+              buttons: ['OK'],
+            });
+        return alert.present();
+      } catch (e) {
+        console.error(e)
+        loading.dismiss()
+        const alert = await alertController
+            .create({
+              message: 'An error occured.',
+              buttons: ['OK'],
+            });
+        return alert.present();
+      }
     },
   }
 }

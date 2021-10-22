@@ -5,7 +5,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button default-href="/tabs/profile"></ion-back-button>
+          <ion-back-button default-href="/tabs/feed"></ion-back-button>
         </ion-buttons>
         <ion-title>Terms & Conditions</ion-title>
       </ion-toolbar>
