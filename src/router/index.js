@@ -1,5 +1,13 @@
 import {createRouter, createWebHistory} from '@ionic/vue-router';
 import Tabs from '../views/Tabs.vue'
+import Feed from "../views/Feed";
+import Profile from "../views/Profile";
+import AuthOptions from "../components/AuthOptions";
+import SignUp from "../components/SignUp";
+import Login from "../components/Login";
+import PostDiscussionView from "../components/PostDiscussionView";
+import PostWebView from "../components/PostWebView";
+import Add from "../views/Add";
 
 const routes = [
     {
@@ -16,21 +24,21 @@ const routes = [
             },
             {
                 path: 'feed',
-                component: () => import('@/views/Feed.vue')
+                component: Feed
             },
             {
                 path: 'add',
-                component: () => import('@/views/Add.vue')
+                component: Add
             },
             {
                 path: 'profile',
-                component: () => import('@/views/Profile.vue')
+                component: Profile
             },
         ]
     },
     {
         path: '/auth',
-        component: () => import('@/components/AuthOptions.vue'),
+        component: AuthOptions,
         props: {
             show_header: true,
             return_after_auth: true
@@ -38,19 +46,19 @@ const routes = [
     },
     {
         path: '/signup',
-        component: () => import('@/components/SignUp.vue')
+        component: SignUp
     },
     {
         path: '/login',
-        component: () => import('@/components/Login.vue')
+        component: Login
     },
     {
         path: '/post/view/:id',
-        component: () => import('@/components/PostWebView.vue')
+        component: PostWebView
     },
     {
         path: '/post/discussion/:id',
-        component: () => import('@/components/PostDiscussionView.vue')
+        component: PostDiscussionView
     },
     {
         path: '/privacy-policy',
