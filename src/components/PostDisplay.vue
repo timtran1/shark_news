@@ -22,7 +22,6 @@ import {
 } from 'ionicons/icons';
 
 
-
 export default {
   name: "PostDisplay",
   mixins: [api],
@@ -41,8 +40,12 @@ export default {
   },
   methods: {
     open_post() {
-      if (this.$props.post.can_load_iframe) this.$router.push(`/post/view/${this.$props.post.id}`)
-      else Browser.open({url: this.$props.post.url})
+      if (this.$props.post.url) {
+        if (this.$props.post.can_load_iframe) this.$router.push(`/post/view/${this.$props.post.id}`)
+        else Browser.open({url: this.$props.post.url})
+      } else {
+        this.$router.push(`/post/discussion/${this.$props.post.id}`)
+      }
     },
   }
 }
