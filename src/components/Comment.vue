@@ -18,8 +18,13 @@
     </ion-row>
 
     <ion-row v-show="!hidden" class="ion-padding-start">
-      <ion-col size="6">
+      <ion-col size="12">
         {{ comment.content }}
+      </ion-col>
+    </ion-row>
+
+    <ion-row v-show="!hidden" class="ion-padding-start">
+      <ion-col size="6">
       </ion-col>
       <ion-col size="2" class="ion-no-padding">
         <ion-button color="medium" size="small" fill="clear" class="ion-no-margin" @click.stop="more">
