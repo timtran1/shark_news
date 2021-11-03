@@ -161,5 +161,6 @@ span {
 
 .comment-wrapper {
   max-width: 700px;
+  margin: auto;
 }
 </style>
