@@ -10,13 +10,18 @@
     </ion-header>
 
     <ion-content :fullscreen="true" class="">
-      <ion-progress-bar v-if="loading" type="indeterminate"></ion-progress-bar>
 
-      <iframe v-if="post" :src="post.url" frameborder="0" @load="loaded"></iframe>
+      <div class="iframe-wrapper" :style="{
+        backgroundImage:`url(${require('@/assets/loading.svg')})`,
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat'
+      }">
+        <iframe v-if="post" :src="post.url" frameborder="0"></iframe>
+      </div>
 
       <p v-if="!post">Loading...</p>
 
-      <ion-card v-if="post" class="ion-no-margin">
+      <ion-card v-if="post" class="post-summary ion-no-margin">
         <post-summary :post="post"/>
       </ion-card>
     </ion-content>
@@ -33,7 +38,6 @@ import {
   IonBackButton,
   IonButtons,
   IonTitle,
-  IonProgressBar
 } from '@ionic/vue';
 import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} from 'ionicons/icons';
 import PostSummary from "../components/PostSummary";
@@ -55,7 +59,6 @@ export default {
     IonButtons,
     IonTitle,
     PostSummary,
-    IonProgressBar
   },
   data() {
     return {
@@ -80,20 +83,26 @@ export default {
         distinct_id: this.$store.state.uid
       })
     },
-    async loaded() {
-      console.log('loaded')
-      await this.sleep(3000)
-      this.loading = false
-    }
   }
 }
 </script>
 
 <style scoped>
-iframe {
-  height: 93%;
+.iframe-wrapper {
   width: 100%;
+  height: 100%;
 }
 
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.post-summary {
+  position: fixed;
+  bottom: 1rem;
+  left: 1%;
+  width: 98%;
+}
 
 </style>
