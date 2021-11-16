@@ -32,21 +32,41 @@
           </ion-text>
 
         </div>
-        <div class="bottom-divider"></div>
-        <ion-list v-if="user">
-          <ion-list-header class="ion-margin-bottom">Posts</ion-list-header>
 
-          <ion-item v-for="post in user.posts" :key="post.id" @click="open_post(post.id)">
+        <ion-segment v-model="posts_list" >
+          <ion-segment-button value="posts">
+            <ion-label>Posts</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="liked">
+            <ion-label>Liked</ion-label>
+          </ion-segment-button>
+        </ion-segment>
 
-            <ion-img class="post-image" v-if="post.image" :src="post.image" slot="start"/>
-            <div class="post-content ion-no-margin" slot="end">
-              <p class="ion-no-margin"><small><b>{{ post.title }}</b></small></p>
-              <p class="ion-no-margin"><small>{{ post.subtext }}</small></p>
-              <post-summary :post="post"/>
-            </div>
-          </ion-item>
-        </ion-list>
+        <div v-if="user">
 
+          <ion-list v-if="posts_list === 'posts' " class="ion-padding-top">
+            <ion-item v-for="post in user.posts" :key="post.id" @click="open_post(post.id)">
+              <ion-img class="post-image" v-if="post.image" :src="post.image" slot="start"/>
+              <div class="post-content ion-no-margin" slot="end">
+                <p class="ion-no-margin"><small><b>{{ post.title }}</b></small></p>
+                <p class="ion-no-margin"><small>{{ post.subtext }}</small></p>
+                <post-summary :post="post"/>
+              </div>
+            </ion-item>
+          </ion-list>
+
+          <ion-list v-if="posts_list === 'liked' " class="ion-padding-top">
+            <ion-item v-for="post in user.liked_posts" :key="post.id" @click="open_post(post.id)">
+              <ion-img class="post-image" v-if="post.image" :src="post.image" slot="start"/>
+              <div class="post-content ion-no-margin" slot="end">
+                <p class="ion-no-margin"><small><b>{{ post.title }}</b></small></p>
+                <p class="ion-no-margin"><small>{{ post.subtext }}</small></p>
+                <post-summary :post="post"/>
+              </div>
+            </ion-item>
+          </ion-list>
+
+        </div>
       </div>
 
       <auth-options v-else/>
@@ -64,7 +84,6 @@ import {
   IonImg,
   IonList,
   IonItem,
-  IonListHeader,
   IonText,
   IonRefresher,
   IonRefresherContent,
@@ -73,7 +92,10 @@ import {
   IonButtons,
   actionSheetController,
   IonToolbar,
-  alertController
+  alertController,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel
 } from '@ionic/vue';
 import {
   ellipsisHorizontalOutline,
@@ -99,7 +121,6 @@ export default {
     IonImg,
     IonList,
     IonItem,
-    IonListHeader,
     IonText,
     PostSummary,
     IonRefresher,
@@ -107,7 +128,10 @@ export default {
     IonIcon,
     IonHeader,
     IonButtons,
-    IonToolbar
+    IonToolbar,
+    IonSegment,
+    IonSegmentButton,
+    IonLabel
   },
   props: {
     user_id: Number
@@ -116,7 +140,8 @@ export default {
     return {
       ellipsisHorizontalOutline,
       informationCircleOutline,
-      user: null
+      user: null,
+      posts_list: 'posts'
     }
   },
   created() {
@@ -239,6 +264,10 @@ export default {
             ],
           });
       await actionSheet.present();
+    },
+    segment_changed(event) {
+      this.posts_list = event.detail.value
+      console.log(this.posts_list)
     }
   }
 }
@@ -253,10 +282,6 @@ export default {
 ion-avatar {
   width: 80px;
   height: 80px;
-}
-
-.bottom-divider {
-  border-bottom: 1px solid lightgrey;
 }
 
 .post-image {
