@@ -44,7 +44,6 @@ import {
 } from '@ionic/vue';
 import api from "../base/api";
 import {default as axios} from "axios";
-import mixpanel from "mixpanel-browser";
 
 
 export default {
@@ -94,10 +93,6 @@ export default {
         const res = await axios.get(`${this.host}/post/comment`, {
           params,
           headers: this.headers
-        })
-
-        mixpanel.track('Comment', {
-          distinct_id: this.$store.state.uid
         })
 
         const comment = res.data.comment

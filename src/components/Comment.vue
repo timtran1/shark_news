@@ -69,7 +69,6 @@ import {
 } from 'ionicons/icons';
 import {default as axios} from "axios";
 import api from "../base/api";
-import mixpanel from "mixpanel-browser";
 
 
 export default {
@@ -112,10 +111,6 @@ export default {
 
       axios.get(`${this.host}/comment/like/${this.$props.comment.id}`, {
         headers: this.headers
-      })
-
-      mixpanel.track('Like', {
-        unique_id: this.$store.state.uid
       })
 
       this.$props.comment.liked = !this.$props.comment.liked

@@ -83,7 +83,6 @@ import WriteCommentModal from "./WriteCommentModal";
 import ContentReportModal from "./ContentReportModal";
 import api from "../base/api";
 import content_report from "../base/content_report";
-import mixpanel from "mixpanel-browser";
 import PostDisplay from "./PostDisplay";
 const axios = require("axios").default
 
@@ -134,10 +133,6 @@ export default {
       const post_id = this.$route.params.id
       const res = await axios.get(`${this.host}/post/discussion/${post_id}`, {headers: this.headers})
       this.post = res.data.post
-
-      mixpanel.track('Post discussion view', {
-        distinct_id: this.$store.state.uid
-      })
 
       if (event) event.target.complete()
     },

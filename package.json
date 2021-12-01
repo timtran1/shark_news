@@ -8,19 +8,15 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-
-    "sync-web": "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/Downloads/keys/key100 root@143.244.179.220 eval 'cd /opt/shark_news_vue && git checkout . && git pull && npm i && npm run build' ",
-
+    "sync-web": "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/Downloads/keys/key100 root@143.244.179.220 eval 'cd /opt/shark_news_vue && git checkout . && git pull && npm i && npm run build && docker restart nginx' ",
     "sync-ios": "LANG=en_US.UTF-8 ionic capacitor sync ios",
     "run-ios": "LANG=en_US.UTF-8 ionic capacitor run ios --target=28D45FE3-BB51-4A31-A344-AB51603A18B3",
     "serve-ios": "LANG=en_US.UTF-8 ionic capacitor run ios --target=28D45FE3-BB51-4A31-A344-AB51603A18B3 --livereload --external",
     "open-ios": "ionic capacitor open ios",
     "generate-icons-ios": "cordova-res ios --skip-config --copy",
-
     "open-android": "npx cap open android",
     "sync-android": "LANG=en_US.UTF-8 ionic capacitor sync android",
     "generate-icons-android": "cordova-res android --skip-config --copy",
-
     "generate-icons": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy && sh copy_android_foreground_icons.sh",
     "sync-all": "vue-cli-service build && echo SYNCING IOS BUILD && LANG=en_US.UTF-8 ionic capacitor sync ios --no-build && echo SYNCING ANDROID BUILD && LANG=en_US.UTF-8 ionic capacitor sync android --no-build && echo UPLOADING TO S3 && aws s3 sync dist s3://sharknews.live --delete"
   },

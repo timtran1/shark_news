@@ -42,7 +42,6 @@ import {
   toastController, alertController
 } from '@ionic/vue';
 import api from "../base/api";
-import mixpanel from "mixpanel-browser";
 import {default as axios} from "axios";
 
 export default {
@@ -81,10 +80,6 @@ export default {
         })
         return alert.present()
       }
-
-      mixpanel.track('Login', {
-        unique_id: res.data.uid
-      })
 
       this.$store.commit('set_uid', res.data.uid)
       this.$store.commit('set_token', res.data.token)

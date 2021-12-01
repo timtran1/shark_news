@@ -41,7 +41,6 @@ import {
 } from '@ionic/vue';
 import {shareOutline, chatboxEllipsesOutline, fishOutline, personCircleOutline} from 'ionicons/icons';
 import PostSummary from "../components/PostSummary";
-import mixpanel from "mixpanel-browser";
 import api from "../base/api";
 
 const axios = require("axios").default
@@ -78,10 +77,6 @@ export default {
       const post_id = this.$route.params.id
       const res = await axios.get(`${this.host}/post/summary/${post_id}`)
       this.post = res.data.post
-
-      mixpanel.track('Post view', {
-        distinct_id: this.$store.state.uid
-      })
     },
   }
 }

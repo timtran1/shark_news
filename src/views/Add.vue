@@ -47,7 +47,6 @@ import {
 import api from "../base/api";
 import AuthOptions from "../components/AuthOptions";
 import {default as axios} from "axios";
-import mixpanel from "mixpanel-browser";
 
 export default {
   name: 'Add',
@@ -88,10 +87,6 @@ export default {
         await axios.get(`${this.host}/post/new`, {
           params,
           headers: this.headers
-        })
-
-        mixpanel.track('Post added', {
-          distinct_id: this.$store.state.uid
         })
 
         const alert = await alertController

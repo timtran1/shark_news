@@ -37,7 +37,6 @@ import {
 } from 'ionicons/icons';
 import api from "../base/api";
 import {Share} from '@capacitor/share';
-import mixpanel from "mixpanel-browser";
 
 const axios = require("axios").default
 
@@ -76,10 +75,6 @@ export default {
         this.$router.push('/auth')
         return
       }
-
-      mixpanel.track('Like', {
-        unique_id: this.uid
-      })
 
       axios.get(`${this.host}/post/like/${this.$props.post.id}`, {
         headers: this.headers

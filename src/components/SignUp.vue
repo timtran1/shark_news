@@ -48,7 +48,6 @@ import {
   toastController
 } from '@ionic/vue';
 import api from "../base/api";
-import mixpanel from "mixpanel-browser";
 const axios = require("axios").default
 
 export default {
@@ -103,8 +102,6 @@ export default {
         })
         return alert.present()
       }
-
-      mixpanel.track('Signup')
 
       this.$store.commit('set_uid', res.data.uid)
       this.$router.back()
