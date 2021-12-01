@@ -9,7 +9,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
 
-    "sync-web": "vue-cli-service build && echo UPLOADING && aws s3 sync dist s3://sharknews.live --delete",
+    "sync-web": "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i  ~/Downloads/keys/key100 root@sharknews.live eval 'cd /opt/shark_news_vue && git pull && npm run build' ",
 
     "sync-ios": "LANG=en_US.UTF-8 ionic capacitor sync ios",
     "run-ios": "LANG=en_US.UTF-8 ionic capacitor run ios --target=28D45FE3-BB51-4A31-A344-AB51603A18B3",

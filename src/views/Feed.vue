@@ -116,8 +116,11 @@ export default {
 
       if (refresh) this.posts = res.data.posts
       else this.posts = this.posts.concat(res.data.posts)
+
       this.$store.state.feed_offset += res.data.posts.length
       if (res.data.posts.length === 0) this.$store.state.feed_end_reached = true
+
+      if (refresh) this.$store.state.feed_end_reached = false
 
       mixpanel.track('Feed request', {
         distinct_id: this.$store.state.uid
