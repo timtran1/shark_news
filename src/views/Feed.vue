@@ -67,7 +67,6 @@ import {
   IonModal
 } from '@ionic/vue';
 import api from "../base/api";
-import mixpanel from "mixpanel-browser";
 import PostDisplay from "../components/PostDisplay";
 import content_report from "../base/content_report";
 import ContentReportModal from "../components/ContentReportModal";
@@ -121,10 +120,7 @@ export default {
       if (res.data.posts.length === 0) this.$store.state.feed_end_reached = true
 
       if (refresh) this.$store.state.feed_end_reached = false
-
-      mixpanel.track('Feed request', {
-        distinct_id: this.$store.state.uid
-      })
+      console.log(this.$store.state.feed_end_reached)
 
       if (event) event.target.complete()
       return true
