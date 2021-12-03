@@ -108,6 +108,7 @@ export default {
   methods: {
     async fetch_feed(event = null, refresh = false) {
       if (refresh) this.$store.state.feed_offset = 0
+
       let res = await axios.get(`${this.host}/feed`, {
         headers: this.headers,
         params: {offset: this.$store.state.feed_offset}
@@ -117,10 +118,7 @@ export default {
       else this.posts = this.posts.concat(res.data.posts)
 
       this.$store.state.feed_offset += res.data.posts.length
-      if (res.data.posts.length === 0) this.$store.state.feed_end_reached = true
-
-      if (refresh) this.$store.state.feed_end_reached = false
-      console.log(this.$store.state.feed_end_reached)
+      if (res.data.posts.length === 0 && !refresh) this.$store.state.feed_end_reached = true
 
       if (event) event.target.complete()
       return true
