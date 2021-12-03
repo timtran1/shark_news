@@ -5,10 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "sync-web": "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/Downloads/keys/key100 root@143.244.179.220 eval 'cd /opt/shark_news_vue && git checkout . && git pull && npm i && npm run build && docker restart nginx' ",
+    "sync-web": "npm run build && zip -r dist.zip dist && scp -i ~/Downloads/keys/key100 ./dist.zip root@143.244.179.220:/opt/dist.zip && rm -rf dist.zip && ssh -i ~/Downloads/keys/key100 root@143.244.179.220 eval 'cd /opt/ && unzip -o dist.zip' ",
     "sync-ios": "LANG=en_US.UTF-8 ionic capacitor sync ios",
     "run-ios": "LANG=en_US.UTF-8 ionic capacitor run ios --target=28D45FE3-BB51-4A31-A344-AB51603A18B3",
     "serve-ios": "LANG=en_US.UTF-8 ionic capacitor run ios --target=28D45FE3-BB51-4A31-A344-AB51603A18B3 --livereload --external",
@@ -18,7 +16,7 @@
     "sync-android": "LANG=en_US.UTF-8 ionic capacitor sync android",
     "generate-icons-android": "cordova-res android --skip-config --copy",
     "generate-icons": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy && sh copy_android_foreground_icons.sh",
-    "sync-all": "vue-cli-service build && echo SYNCING IOS BUILD && LANG=en_US.UTF-8 ionic capacitor sync ios --no-build && echo SYNCING ANDROID BUILD && LANG=en_US.UTF-8 ionic capacitor sync android --no-build && echo BUILDING ON WEB SERVER && npm run sync-web"
+    "sync-all": "vue-cli-service build && echo SYNCING IOS BUILD && LANG=en_US.UTF-8 ionic capacitor sync ios --no-build && echo SYNCING ANDROID BUILD && LANG=en_US.UTF-8 ionic capacitor sync android --no-build && echo PUSHING TO WEB SERVER && zip -r dist.zip dist && scp -i ~/Downloads/keys/key100 ./dist.zip root@143.244.179.220:/opt/dist.zip && rm -rf dist.zip && ssh -i ~/Downloads/keys/key100 root@143.244.179.220 eval 'cd /opt/ && unzip -o dist.zip' "
   },
   "dependencies": {
     "@capacitor/android": "^3.2.5",
