@@ -8,8 +8,17 @@ export default async function init_store() {
         Storage.get({key: 'v_uid'})
     ])
 
-    token = token.value || await init_user()
+    token = token.value
     uid = parseInt(uid.value)
+
+    if (!token) {
+        token = await init_user()
+        uid = 0
+        Storage.set({
+            key: 'token',
+            value: token
+        })
+    }
 
     return createStore({
         state() {
@@ -22,6 +31,8 @@ export default async function init_store() {
                 writing_report: false,
                 feed_offset: 0,
                 feed_end_reached: false,
+                viewing_post_id: false,
+                starting_viewing_timestamp: 0
             }
         },
         mutations: {

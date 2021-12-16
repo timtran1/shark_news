@@ -84,6 +84,7 @@ import ContentReportModal from "./ContentReportModal";
 import api from "../base/api";
 import content_report from "../base/content_report";
 import PostDisplay from "./PostDisplay";
+
 const axios = require("axios").default
 
 
@@ -131,10 +132,12 @@ export default {
   methods: {
     async fetch_post(event = null) {
       const post_id = this.$route.params.id
-      const res = await axios.get(`${this.host}/post/discussion/${post_id}`, {headers: this.headers})
-      this.post = res.data.post
+      if (post_id) {
+        const res = await axios.get(`${this.host}/post/discussion/${post_id}`, {headers: this.headers})
+        this.post = res.data.post
 
-      if (event) event.target.complete()
+        if (event) event.target.complete()
+      }
     },
     toggle_write_comment() {
       this.writing_comment = !this.writing_comment

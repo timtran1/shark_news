@@ -1,7 +1,7 @@
 <template>
   <div @click="open_post" class="ion-padding-start ion-padding-end post-container">
     <h4>{{ $props.post.title }}</h4>
-    <ion-img class="post-img" v-if="$props.post.image" :src="$props.post.image"/>
+    <img class="post-img" v-if="$props.post.image" :src="$props.post.image" alt=""/>
     <p>{{ $props.post.subtext }}</p>
 
     <post-summary :post="$props.post"/>
@@ -11,22 +11,19 @@
 </template>
 
 <script>
-import {
-  IonImg
-} from '@ionic/vue';
 import api from "../base/api";
 import PostSummary from "./PostSummary";
 import {Browser} from '@capacitor/browser';
 import {
   ellipsisHorizontalOutline
 } from 'ionicons/icons';
+import {default as axios} from "axios";
 
 
 export default {
   name: "PostDisplay",
   mixins: [api],
   components: {
-    IonImg,
     PostSummary
   },
   props: {
@@ -40,6 +37,8 @@ export default {
   },
   methods: {
     open_post() {
+      axios.get(`${this.host}/post/click/${this.$props.post.id}`, {headers: this.headers})
+
       if (this.$props.post.url) {
         if (this.$props.post.can_load_iframe) this.$router.push(`/post/view/${this.$props.post.id}`)
         else Browser.open({url: this.$props.post.url})

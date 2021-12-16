@@ -75,8 +75,10 @@ export default {
   methods: {
     async fetch_post() {
       const post_id = this.$route.params.id
-      const res = await axios.get(`${this.host}/post/summary/${post_id}`)
-      this.post = res.data.post
+      if (post_id) {
+        const res = await axios.get(`${this.host}/post/summary/${post_id}`)
+        this.post = res.data.post
+      }
     },
   }
 }

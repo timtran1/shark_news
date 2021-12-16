@@ -6,29 +6,13 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" id="scrollArea">
       <ion-refresher slot="fixed" @ionRefresh="fetch_feed($event, true)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
       <div class="posts ion-justify-content-center ion-align-items-center">
-        <div v-for="post in posts" :key="post.id">
-          <ion-row class="user-name-row ion-padding-start ion-padding-end ion-padding-top">
-            <ion-col size="6" class="ion-justify-content-center user-col" color="light">
-              <span>
-                <small>{{ post.user.name }}</small>
-              </span>
-            </ion-col>
-            <ion-col size="5">
-            </ion-col>
-            <ion-col size="1" class="ion-text-right" @click.stop="more_actions_post(post)">
-              <span class="ion-text-right">
-                <ion-icon :icon="ellipsisHorizontalOutline"/>
-              </span>
-            </ion-col>
-          </ion-row>
-          <post-display :post="post"/>
-        </div>
+        <post-display-feed-unit v-for="post in posts" :post="post" :key="post.id"/>
       </div>
 
       <ion-modal :is-open="writing_report">
@@ -61,13 +45,10 @@ import {
   IonToolbar,
   IonInfiniteScrollContent,
   IonInfiniteScroll,
-  IonRow,
-  IonCol,
-  IonIcon,
   IonModal
 } from '@ionic/vue';
 import api from "../base/api";
-import PostDisplay from "../components/PostDisplay";
+import PostDisplayFeedUnit from "../components/PostDisplayFeedUnit";
 import content_report from "../base/content_report";
 import ContentReportModal from "../components/ContentReportModal";
 
@@ -81,6 +62,7 @@ export default {
   name: 'Feed',
   mixins: [api, content_report],
   components: {
+    PostDisplayFeedUnit,
     IonContent,
     IonPage,
     IonRefresher,
@@ -89,10 +71,6 @@ export default {
     IonToolbar,
     IonInfiniteScrollContent,
     IonInfiniteScroll,
-    PostDisplay,
-    IonRow,
-    IonCol,
-    IonIcon,
     IonModal,
     ContentReportModal
   },
@@ -131,13 +109,5 @@ export default {
 .posts {
   display: flex;
   flex-direction: column;
-}
-
-span {
-  color: grey;
-}
-
-.user-col {
-  padding-left: 0 !important;
 }
 </style>

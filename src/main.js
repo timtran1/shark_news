@@ -26,6 +26,7 @@ import './theme/variables.css';
 
 
 async function Application() {
+    console.log('app reload')
     const store = await init_store()
 
     const app = createApp(App)

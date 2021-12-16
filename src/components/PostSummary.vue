@@ -87,7 +87,7 @@ export default {
       const post = this.$props.post
       return Share.share({
         title: `${post.title} - SharkNews`,
-        text: `Shared from SharkNews`,
+        text: `${post.title} - SharkNews`,
         url: `https://sharknews.live/post/discussion/${post.id}`,
         dialogTitle: 'Share post',
       });
