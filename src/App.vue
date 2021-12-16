@@ -51,7 +51,7 @@ export default defineComponent({
 
       if (track_rating_paths.some(path => to.fullPath.includes(path))) {
         console.log('start tracking rating')
-        if (!this.$store.state.viewing_post_id && this.$route.params.id) {// /post/view and /post/discussion only, /tabs/feed will start tracking automatically from inside PostDisplayFeedUnit
+        if (this.$route.params.id && this.$store.state.viewing_post_id !== this.$route.params.id) {// /post/view and /post/discussion only, /tabs/feed will start tracking automatically from inside PostDisplayFeedUnit
           this.$store.state.viewing_post_id = parseInt(this.$route.params.id)
           this.$store.state.starting_viewing_timestamp = Date.now()
         }
