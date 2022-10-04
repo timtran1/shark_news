@@ -26,7 +26,7 @@ import {
 } from '@ionic/vue';
 import api from "../base/api";
 import PostDisplay from "./PostDisplay";
-import {default as axios} from "axios";
+// import {default as axios} from "axios";
 import {
   ellipsisHorizontalOutline
 } from 'ionicons/icons';
@@ -50,30 +50,30 @@ export default {
       ellipsisHorizontalOutline
     }
   },
-  mounted() {
-    let observer = new IntersectionObserver(entries => {
-      if (entries[0].intersectionRatio >= 1.0) {
-        // rate previous post
-        if (this.$store.state.viewing_post_id !== this.$props.post.id) {
-          const rating = Date.now() - this.$store.state.starting_viewing_timestamp
-          if (this.$store.state.starting_viewing_timestamp > 0 && rating > 0) {
-            axios.get(`${this.host}/post/rate/${this.$store.state.viewing_post_id}/${rating}`, {
-              headers: this.headers,
-            })
-          }
-
-          this.$store.state.viewing_post_id = this.$props.post.id
-          this.$store.state.starting_viewing_timestamp = Date.now()
-        }
-      }
-
-    }, {
-      root: document.querySelector('#scrollArea'),
-      rootMargin: '0px',
-      threshold: 1.0
-    });
-    observer.observe(this.$el);
-  },
+  // mounted() {
+  //   let observer = new IntersectionObserver(entries => {
+  //     if (entries[0].intersectionRatio >= 1.0) {
+  //       // rate previous post
+  //       if (this.$store.state.viewing_post_id !== this.$props.post.id) {
+  //         const rating = Date.now() - this.$store.state.starting_viewing_timestamp
+  //         if (this.$store.state.starting_viewing_timestamp > 0 && rating > 0) {
+  //           axios.get(`${this.host}/post/rate/${this.$store.state.viewing_post_id}/${rating}`, {
+  //             headers: this.headers,
+  //           })
+  //         }
+  //
+  //         this.$store.state.viewing_post_id = this.$props.post.id
+  //         this.$store.state.starting_viewing_timestamp = Date.now()
+  //       }
+  //     }
+  //
+  //   }, {
+  //     root: document.querySelector('#scrollArea'),
+  //     rootMargin: '0px',
+  //     threshold: 1.0
+  //   });
+  //   observer.observe(this.$el);
+  // },
 }
 </script>
 

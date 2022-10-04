@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="enable_signup" model="res.config.settings">
+            <field name="auth_signup_uninvited">b2c</field>
+        </record>
+
+    </data>
+</odoo>

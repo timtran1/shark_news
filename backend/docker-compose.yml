@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+  sn:
+    build: .
+    restart: always
+    container_name: sn
+    depends_on:
+     - sn_db
+    privileged: true
+    ports:
+      - 8069:8069
+    volumes:
+      - ./addons:/mnt/addons
+      - ./odoo.conf:/etc/odoo/odoo.conf
+      - ./odoo_data:/var/lib/odoo
+    environment:
+      - AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
+      - AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
+      - AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION}"
+      - MIXPANEL_PROJECT_TOKEN="${MIXPANEL_PROJECT_TOKEN}"
+      - HOST=sn_db
+      - PASSWORD=${POSTGRES_PASSWORD}
+      - USER=${POSTGRES_USER}
+
+  sn_db:
+    image: postgres:14-alpine
+    restart: always
+    container_name: sn_db
+   # ports:
+   #   - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+    volumes:
+      - ./conf/pg/my-postgres.conf:/etc/postgresql/postgresql.conf
+      - ./pg_data:/var/lib/postgresql/data
+    command: postgres -c config_file='/etc/postgresql/postgresql.conf'

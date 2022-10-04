@@ -1,0 +1,6 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_post,access_post,model_post,base.group_user,1,1,1,1
+access_post_comment,access_post_comment,model_post_comment,base.group_user,1,1,1,1
+access_content_report,access_content_report,model_content_report,base.group_user,1,1,1,1
+access_res_users_fields,access_res_users_fields,model_res_users_fields,base.group_user,1,1,1,1
+access_post_rating,access_post_rating,model_post_rating,base.group_user,1,1,1,1

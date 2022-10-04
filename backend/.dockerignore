@@ -1,0 +1,9 @@
+venv
+.git
+.idea
+DS_Store
+redis_data
+odoo_data
+pg_data
+odoo
+*/__pycache__

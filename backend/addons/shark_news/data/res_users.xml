@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="bot1" model="res.users">
+            <field name="name">Snyders</field>
+            <field name="login">Snyders</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/0.png"/>
+        </record>
+
+        <record id="bot2" model="res.users">
+            <field name="name">Frogbro</field>
+            <field name="login">Frogbro@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/1.png"/>
+        </record>
+
+        <record id="bot3" model="res.users">
+            <field name="name">haulumat</field>
+            <field name="login">haulumat@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/2.png"/>
+        </record>
+
+        <record id="bot4" model="res.users">
+            <field name="name">Blubber</field>
+            <field name="login">Blubber@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/3.png"/>
+        </record>
+
+        <record id="bot5" model="res.users">
+            <field name="name">newsgo</field>
+            <field name="login">newsgo@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/4.png"/>
+        </record>
+
+        <record id="bot6" model="res.users">
+            <field name="name">pincharch</field>
+            <field name="login">pincharch@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/5.png"/>
+        </record>
+
+        <record id="bot7" model="res.users">
+            <field name="name">ShowBloom</field>
+            <field name="login">ShowBloom@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/6.png"/>
+        </record>
+
+        <record id="bot8" model="res.users">
+            <field name="name">Slashdot</field>
+            <field name="login">Slashdot@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/1.png"/>
+        </record>
+
+        <record id="bot9" model="res.users">
+            <field name="name">PoshyRoll</field>
+            <field name="login">PoshyRoll@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/2.png"/>
+        </record>
+
+        <record id="bot10" model="res.users">
+            <field name="name">Shmoeba</field>
+            <field name="login">Shmoeba@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/3.png"/>
+        </record>
+
+        <record id="bot11" model="res.users">
+            <field name="name">Boardom</field>
+            <field name="login">Boardom@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/4.png"/>
+        </record>
+
+        <record id="bot12" model="res.users">
+            <field name="name">Stevent</field>
+            <field name="login">Stevent@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/5.png"/>
+        </record>
+
+        <record id="bot13" model="res.users">
+            <field name="name">Aveserra</field>
+            <field name="login">Aveserra@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/6.png"/>
+        </record>
+
+        <record id="bot14" model="res.users">
+            <field name="name">Flynn Phillips</field>
+            <field name="login">FlynnPhillips@gmail.com</field>
+            <field name="password">000000</field>
+            <field name="bot" eval="True"/>
+            <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="image_1920" type="base64" file="shark_news/static/img/0.png"/>
+        </record>
+
+    </data>
+
+    <data noupdate="1">
+        <function name="signup_bots" model="res.users" eval="[1]"/>
+    </data>
+</odoo>

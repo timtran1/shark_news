@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem name="Posts" id="menu_posts_root" sequence="0"/>
+
+        <record id="action_posts" model="ir.actions.act_window">
+            <field name="name">Posts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">post</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Posts" id="menu_posts" action="action_posts" parent="menu_posts_root" sequence="0"/>
+
+        <record id="action_comments" model="ir.actions.act_window">
+            <field name="name">Comments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">post.comment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Comments" id="menu_comments" action="action_comments" parent="menu_posts_root" sequence="1"/>
+
+        <record id="action_user_fields" model="ir.actions.act_window">
+            <field name="name">Users</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.users.fields</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Users" id="menu_users_fields" action="action_user_fields" parent="menu_posts_root"
+                  sequence="2"/>
+
+        <record id="action_post_rating" model="ir.actions.act_window">
+            <field name="name">Ratings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">post.rating</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Ratings" id="menu_post_rating" action="action_post_rating" parent="menu_posts_root"
+                  sequence="3"/>
+
+        <record id="action_report" model="ir.actions.act_window">
+            <field name="name">Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">content.report</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Reports" id="menu_report" action="action_report" parent="menu_posts_root" sequence="4"/>
+    </data>
+</odoo>

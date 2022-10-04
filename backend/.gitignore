@@ -1,0 +1,14 @@
+venv
+.git
+.idea
+DS_Store
+redis_data
+odoo_data
+pg_data
+odoo
+s.json
+*/__pycache__
+__pycache__/
+
+.env
+*.pyc

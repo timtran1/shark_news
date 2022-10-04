@@ -1,9 +1,10 @@
+import host from "@/host";
+
 export default {
     name: 'APIMixin',
     computed: {
         host() {
-            if (process.env.NODE_ENV === 'development') return 'http://localhost'
-            return 'https://api.sharknews.live'
+            return host
         },
         uid() {
             return this.$store.state.uid
