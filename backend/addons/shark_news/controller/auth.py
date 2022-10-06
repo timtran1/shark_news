@@ -107,7 +107,7 @@ class Controller(http.Controller):
     @http.route(['/login'], type='http', auth='public', website=True, cors='*')
     def login(self, email, password, **kw):
         try:
-            uid = request.session.authenticate('localhost', email, password)
+            uid = request.session.authenticate('sn', email, password)
             secret = request.env['ir.config_parameter'].sudo().get_param('database.secret')
             token = jwt.encode({
                 'uid': uid,
